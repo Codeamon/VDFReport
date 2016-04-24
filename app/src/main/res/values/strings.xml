@@ -19,7 +19,7 @@
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
-    <string name="title_activity_login">Giris</string>
+    <string name="title_activity_login">VDF Report</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
