@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         btnFinans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent("android.intent.action.DETAIL"));
+                startActivity(new Intent("android.intent.action.LOGIN"));
                 //deneme
             }
         });
