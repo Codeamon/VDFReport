@@ -1,5 +1,6 @@
 package com.ayoka.vdfreport;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,7 +31,8 @@ public class ReportListActivity extends AppCompatActivity {
         r_listview.setAdapter(r_adaptor);
         r_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Toast.makeText(ReportListActivity.this.getBaseContext(), r_listview.getAdapter().getItem(position).toString(), 0).show();
+                startActivity(new Intent(getApplicationContext(),ReportActivity.class));
+                //Toast.makeText(ReportListActivity.this.getBaseContext(), r_listview.getAdapter().getItem(position).toString(), 0).show();
             }
         });
 //        listemiz.setOnItemClickListener(new AdapterView.OnItemClickListener() {

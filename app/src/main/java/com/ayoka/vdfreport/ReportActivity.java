@@ -1,13 +1,20 @@
 package com.ayoka.vdfreport;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -17,21 +24,74 @@ import java.util.ArrayList;
  */
 public class ReportActivity extends AppCompatActivity {
     protected BarChart mChart;
+    private SeekBar mSeekBarX, mSeekBarY;
+    private TextView tvX, tvY;
+    private Typeface mTf;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
+//        tvX = (TextView) findViewById(R.id.tvXMax);
+//        tvY = (TextView) findViewById(R.id.tvYMax);
+//
+//        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
+//        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
+//
+//        mChart = (BarChart) findViewById(R.id.chart1);
+//        mChart.setOnChartValueSelectedListener(this);
+//
+//        mChart.setDrawBarShadow(false);
+//        mChart.setDrawValueAboveBar(true);
+//
+//        mChart.setDescription("");
+//
+//        // if more than 60 entries are displayed in the chart, no values will be
+//        // drawn
+//        mChart.setMaxVisibleValueCount(60);
+//
+//        // scaling can now only be done on x- and y-axis separately
+//        mChart.setPinchZoom(false);
+//
+//        mChart.setDrawGridBackground(false);
+//        // mChart.setDrawYLabels(false);
+//
+//        mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+//
+//        XAxis xAxis = mChart.getXAxis();
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//        xAxis.setTypeface(mTf);
+//        xAxis.setDrawGridLines(false);
+//        xAxis.setSpaceBetweenLabels(2);
+//
+//        YAxisValueFormatter custom = new MyYAxisValueFormatter();
+//
+//        YAxis leftAxis = mChart.getAxisLeft();
+//        leftAxis.setTypeface(mTf);
+//        leftAxis.setLabelCount(8, false);
+//        leftAxis.setValueFormatter(custom);
+//        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+//        leftAxis.setSpaceTop(15f);
+//        leftAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
+//
+//        YAxis rightAxis = mChart.getAxisRight();
+//        rightAxis.setDrawGridLines(false);
+//        rightAxis.setTypeface(mTf);
+//        rightAxis.setLabelCount(8, false);
+//        rightAxis.setValueFormatter(custom);
+//        rightAxis.setSpaceTop(15f);
+//        rightAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
+//
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4f, 0));
-        entries.add(new BarEntry(8f, 1));
-        entries.add(new BarEntry(6f, 2));
-        entries.add(new BarEntry(12f, 3));
-        entries.add(new BarEntry(18f, 4));
-        entries.add(new BarEntry(9f, 5));
+        entries.add(new BarEntry(4050f, 0));
+        entries.add(new BarEntry(8980f, 1));
+        entries.add(new BarEntry(6045f, 2));
+        entries.add(new BarEntry(12916f, 3));
+        entries.add(new BarEntry(18405f, 4));
+        entries.add(new BarEntry(9240f, 5));
 
         BarDataSet dataset = new BarDataSet(entries, "# of Calls");
-
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("January");
         labels.add("February");
@@ -45,5 +105,6 @@ public class ReportActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
         chart.setData(data);
         chart.setDescription("# of times ");
+        chart.animateY(3000);
     }
 }
