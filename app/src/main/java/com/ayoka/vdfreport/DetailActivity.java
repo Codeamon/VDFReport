@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by ahmetyildirim on 23.4.2016.
+ * Deneme
  */
 public class DetailActivity extends AppCompatActivity {
     @Override
