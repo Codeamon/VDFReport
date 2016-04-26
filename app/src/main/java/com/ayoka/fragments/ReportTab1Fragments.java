@@ -30,22 +30,23 @@ public class ReportTab1Fragments extends Fragment {
         entries.add(new BarEntry(12916f, 3));
         entries.add(new BarEntry(18405f, 4));
         entries.add(new BarEntry(9240f, 5));
-
+        entries.add(new BarEntry(6040f, 6));
         BarDataSet dataset = new BarDataSet(entries, "# of Calls");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
         ArrayList<String> labels = new ArrayList<String>();
-        labels.add("January");
-        labels.add("February");
-        labels.add("March");
-        labels.add("April");
-        labels.add("May");
-        labels.add("June");
+        labels.add("Ekim");
+        labels.add("Kasım");
+        labels.add("Aralık");
+        labels.add("Ocak");
+        labels.add("Şubat");
+        labels.add("Mart");
+        labels.add("Nisan");
 
         BarChart chart = new BarChart(getActivity().getApplicationContext());
       //  setContentView(chart);
         BarData data = new BarData(labels, dataset);
         chart.setData(data);
-        chart.setDescription("# of times ");
+        chart.setDescription("Aylık Kredi Raporları");
         chart.animateY(3000);
 return chart;
        // return inflater.inflate(R.layout.activity_report_tab1, container, false);
