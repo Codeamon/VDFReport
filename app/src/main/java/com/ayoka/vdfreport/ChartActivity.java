@@ -19,6 +19,4 @@ public class ChartActivity extends AppCompatActivity {
         int[] firstData={23,145,67,78,86,190,46,78,167,164};
         int[] secondData={83,45,168,138,67,150,64,87,144,188};
     }
-
-
 }
