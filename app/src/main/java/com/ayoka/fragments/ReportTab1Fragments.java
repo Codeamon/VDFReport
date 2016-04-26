@@ -31,7 +31,7 @@ public class ReportTab1Fragments extends Fragment {
         entries.add(new BarEntry(18405f, 4));
         entries.add(new BarEntry(9240f, 5));
         entries.add(new BarEntry(6040f, 6));
-        BarDataSet dataset = new BarDataSet(entries, "# of Calls");
+        BarDataSet dataset = new BarDataSet(entries, "# Aylar");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("Ekim");

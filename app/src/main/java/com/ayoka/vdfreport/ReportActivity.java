@@ -43,8 +43,8 @@ public class ReportActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Montly"));
-        tabLayout.addTab(tabLayout.newTab().setText("Daily"));
+        tabLayout.addTab(tabLayout.newTab().setText("Aylık"));
+        tabLayout.addTab(tabLayout.newTab().setText("Günlük"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
