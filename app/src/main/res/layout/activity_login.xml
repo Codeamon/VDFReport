@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_header_selector">
+<android.widget.ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-<ScrollView
-    android:id="@+id/svScroll"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,13 +21,12 @@
     tools:context="com.ayoka.vdfreport.LoginActivity">
 
 
-        <ImageView android:src="@drawable/rapor"
+        <ImageView android:src="@drawable/vdfreport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
-
-        <!-- Email Label -->
+            android:layout_gravity="top|center_horizontal" />
+    <!-- Email Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,8 +59,11 @@
     android:text="Giriş"
     android:id="@+id/btn_login"/>
 
+
+
 </LinearLayout>
-</ScrollView>
+
+</android.widget.ScrollView>
 </RelativeLayout>
 
 
