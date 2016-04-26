@@ -3,10 +3,17 @@ package com.ayoka.vdfreport;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.ayoka.Adapters.ReportPagerAdapter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -31,6 +38,36 @@ public class ReportActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Montly"));
+        tabLayout.addTab(tabLayout.newTab().setText("Daily"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ReportPagerAdapter adapter = new ReportPagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 //        tvX = (TextView) findViewById(R.id.tvXMax);
 //        tvY = (TextView) findViewById(R.id.tvYMax);
@@ -82,6 +119,7 @@ public class ReportActivity extends AppCompatActivity {
 //        rightAxis.setSpaceTop(15f);
 //        rightAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
 //
+        /*
         ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(4050f, 0));
         entries.add(new BarEntry(8980f, 1));
@@ -105,6 +143,9 @@ public class ReportActivity extends AppCompatActivity {
         BarData data = new BarData(labels, dataset);
         chart.setData(data);
         chart.setDescription("# of times ");
-        chart.animateY(3000);
+        chart.animateY(3000);*/
     }
+
+
+
 }
