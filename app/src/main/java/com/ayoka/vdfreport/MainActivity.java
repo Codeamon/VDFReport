@@ -9,32 +9,79 @@ import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.ayoka.Adapters.CustomList;
 
+public class MainActivity extends AppCompatActivity {
+    ListView list;
+    String[] web = {
+            "volkswagen doğuş finans",
+            "sigorta hizmetleri",
+            "faktoring"
+    } ;
+    Integer[] imageId = {
+            R.drawable.finance,
+            R.drawable.insurance,
+            R.drawable.faktoringg,
+
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton btnFinans = (ImageButton) findViewById(R.id.imgBtnFinans);
+//        ImageButton btnFinans = (ImageButton) findViewById(R.id.imgBtnFinans);
+        CustomList adapter = new
+                CustomList(MainActivity.this, web, imageId);
+        list=(ListView)findViewById(R.id.menu_list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        btnFinans.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
                 startActivity(new Intent(getApplicationContext(),ReportListActivity.class));
-                //deneme
+//                Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
             }
         });
 
+//        btnFinans.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getApplicationContext(),ReportListActivity.class));
+//                //deneme
+//            }
+//        });
+
 
     }
+    public boolean onCreateOptionsMenu (Menu menu){
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menutanim = getMenuInflater();
+        menutanim.inflate(R.menu.main, menu);
+        return true;
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                startActivity (new Intent(getApplicationContext(),LoginActivity.class));
+                return true;
+
+        }
+        return false;
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

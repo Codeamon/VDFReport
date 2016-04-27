@@ -1,5 +1,6 @@
 package com.ayoka.vdfreport;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -146,6 +148,21 @@ public class ReportActivity extends AppCompatActivity {
         chart.animateY(3000);*/
     }
 
+    public boolean onCreateOptionsMenu (Menu menu){
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menutanim = getMenuInflater();
+        menutanim.inflate(R.menu.main, menu);
+        return true;
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                startActivity (new Intent(getApplicationContext(),LoginActivity.class));
+                return true;
+
+        }
+        return false;
+    }
 
 }
