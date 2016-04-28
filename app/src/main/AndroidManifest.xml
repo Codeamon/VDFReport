@@ -42,13 +42,27 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait">
             <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
+                <!--  <action android:name="android.intent.action.DETAIL" />
+                  <category android:name="android.intent.category.DEFAULT" />-->
+                     <action android:name="android.intent.action.MAIN" />
 
-                 <category android:name="android.intent.category.LAUNCHER" />
+                   <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
         <activity android:name=".ReportActivity">
+            <intent-filter>
+                <!--<action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />-->
+
+                <action android:name="android.intent.action.DETAIL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ReportDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DETAIL" />
 
