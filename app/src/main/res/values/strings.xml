@@ -42,5 +42,8 @@
     <string name="login">Giriş</string>
     <string name="title_activity_report">VDF Rapor</string>
 
+    <string name="exit">Çıkış</string>
+
+
 
 </resources>

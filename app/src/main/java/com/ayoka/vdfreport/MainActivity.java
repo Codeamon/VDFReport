@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +25,8 @@ import com.ayoka.Adapters.CustomList;
 
 public class MainActivity extends AppCompatActivity {
     ListView list;
+
+    private Toolbar toolbar;
     String[] web = {
             "volkswagen doğuş finans",
             "sigorta hizmetleri",
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
 //        ImageButton btnFinans = (ImageButton) findViewById(R.id.imgBtnFinans);
         CustomList adapter = new
@@ -50,9 +57,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                startActivity(new Intent(getApplicationContext(),ReportListActivity.class));
+                if(id==R.id.exit)
+                {
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
+                else {
+                    startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
 //                Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-
+                }
             }
         });
 
@@ -66,21 +78,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public boolean onCreateOptionsMenu (Menu menu){
-        super.onCreateOptionsMenu(menu);
-        MenuInflater menutanim = getMenuInflater();
-        menutanim.inflate(R.menu.main, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.action_settings:
-                startActivity (new Intent(getApplicationContext(),LoginActivity.class));
-                return true;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.exit) {
+
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
-        return false;
+
+        return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

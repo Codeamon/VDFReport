@@ -157,7 +157,7 @@ public class ReportActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case R.id.action_settings:
+            case R.id.exit:
                 startActivity (new Intent(getApplicationContext(),LoginActivity.class));
                 return true;
 
