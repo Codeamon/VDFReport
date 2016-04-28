@@ -5,7 +5,7 @@
 
     </style>
 
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -28,4 +28,6 @@
         <item name="android:background">@drawable/custom_btn_shakespeare</item>
         <item name="android:padding">10dip</item>
     </style>
+
+
 </resources>

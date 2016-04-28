@@ -3,41 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/main_header_selector">
-    android:weightSum="1"
+
+    android:background="@drawable/main_header_selector"
     tools:context="com.ayoka.vdfreport.MainActivity">
-
-
-    <ImageButton
-        android:id="@+id/imgBtnFinans"
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"
+        ></include>
+    <ListView
+        android:id="@+id/menu_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/finans"
-        android:background="@android:color/transparent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="83dp" />
-    <ImageButton
-        android:id="@+id/imgBtnSigorta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/sigorta"
-        android:background="@android:color/transparent"
-        android:layout_below="@+id/imgBtnFinans"
-        android:layout_alignParentLeft="true"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool_bar"
         android:layout_alignParentStart="true" />
 
-    <ImageButton
-        android:id="@+id/imgBtnFaktoring"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/faktoring"
-        android:background="@android:color/transparent"
-        android:layout_below="@+id/imgBtnFinans"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+
+    <!--<ImageButton-->
+        <!--android:id="@+id/imgBtnFinans"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/finance"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:layout_gravity="top|right"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignEnd="@+id/imgBtnFaktoring" />-->
+    <!--<ImageButton-->
+        <!--android:id="@+id/imgBtnSigorta"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/insurance"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentStart="true" />-->
+
+    <!--<ImageButton-->
+        <!--android:id="@+id/imgBtnFaktoring"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/faktoringg"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
+
 </RelativeLayout>
