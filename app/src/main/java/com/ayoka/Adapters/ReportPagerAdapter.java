@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.ayoka.fragments.ReportInsComDailyTabFragments;
 import com.ayoka.fragments.ReportTab1Fragments;
 import com.ayoka.fragments.ReportTab2Fragments;
 

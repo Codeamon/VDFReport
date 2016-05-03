@@ -10,7 +10,6 @@ tools:context=".ReportActivity">
 
 <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
-    android:title="@string/title_activity_report"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"

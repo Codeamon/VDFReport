@@ -21,7 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.ayoka.Adapters.CustomList;
+import com.ayoka.Adapters.MainActivityAdapter;
 
 public class MainActivity extends AppCompatActivity {
     ListView list;
@@ -46,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
 //        ImageButton btnFinans = (ImageButton) findViewById(R.id.imgBtnFinans);
-        CustomList adapter = new
-                CustomList(MainActivity.this, web, imageId);
+        MainActivityAdapter adapter = new
+                MainActivityAdapter(MainActivity.this, web, imageId);
         list=(ListView)findViewById(R.id.menu_list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,14 +56,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+
                 if(id==R.id.exit)
                 {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 }
-                else {
+                switch (position)
+                {
+                    case 0:
                     startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
-//                Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+                      break;
+//                  Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+                    case 1:
+                        startActivity(new Intent(getApplicationContext(), ReportListActivityInsurance.class));
+                        break;
                 }
+
+//                Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -96,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.exit) {
 
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        if(id==R.id.action_home)
+        {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

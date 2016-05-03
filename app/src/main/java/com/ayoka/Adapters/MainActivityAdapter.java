@@ -13,12 +13,12 @@ import com.ayoka.vdfreport.R;
 /**
  * Created by ahmetyildirim on 27.4.2016.
  */
-public class CustomList extends ArrayAdapter<String> {
+public class MainActivityAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
     private final String[] web;
     private final Integer[] imageId;
-    public CustomList(Activity context,
+    public  MainActivityAdapter(Activity context,
                       String[] web, Integer[] imageId) {
         super(context, R.layout.list_single, web);
         this.context = context;

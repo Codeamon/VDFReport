@@ -11,10 +11,15 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_home"
+        android:orderInCategory="0"
+        android:title="Anasayfa"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom"></item>
+    <item
         android:id="@+id/action_user"
         android:orderInCategory="300"
         android:title="User"
-        android:icon="@drawable/user2"
+        android:icon="@drawable/user3"
         app:showAsAction="ifRoom"></item>
-
 </menu>
