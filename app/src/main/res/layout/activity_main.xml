@@ -9,6 +9,7 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar"
         ></include>
+
     <ListView
         android:id="@+id/menu_list"
         android:layout_width="wrap_content"

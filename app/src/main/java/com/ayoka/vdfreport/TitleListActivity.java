@@ -1,10 +1,14 @@
 package com.ayoka.vdfreport;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,12 +27,18 @@ public class TitleListActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private CategoryListAdapter adapter;
     public ArrayList<Category> categoryList = new ArrayList<Category>();
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_list);
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         categoryList=new JsonOperations().GetListByCategory(0);
         adapter = new CategoryListAdapter(this, categoryList);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -55,5 +65,30 @@ public class TitleListActivity extends AppCompatActivity {
             }
         }));
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.exit) {
+
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        if(id==R.id.action_home)
+        {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
