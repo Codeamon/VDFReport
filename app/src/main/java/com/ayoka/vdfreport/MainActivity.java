@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (position)
                 {
                     case 0:
-                    startActivity(new Intent(getApplicationContext(), ReportListActivity.class));
+                    startActivity(new Intent(getApplicationContext(), TitleListActivity.class));
                       break;
 //                  Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
 

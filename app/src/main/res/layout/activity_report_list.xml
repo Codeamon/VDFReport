@@ -3,7 +3,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".ReportListActivity"
-    android:background="@drawable/main_header_selector"
+    android:background="@drawable/pagebg"
     android:orientation="vertical"  >
     <include
         android:id="@+id/tool_bar"
