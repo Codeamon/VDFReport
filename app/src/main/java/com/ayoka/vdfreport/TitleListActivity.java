@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.ayoka.Adapters.CategoryListAdapter;
+
 import com.ayoka.Listener.RecyclerTouchListener;
 import com.ayoka.Model.Category;
 import com.ayoka.common.JsonOperations;
@@ -27,6 +28,9 @@ public class TitleListActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private CategoryListAdapter adapter;
     public ArrayList<Category> categoryList = new ArrayList<Category>();
+
+    private int currentProjectId = 0;
+    private int currentMainCategoryId=0;
     private Toolbar toolbar;
 
     @Override
@@ -34,12 +38,18 @@ public class TitleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_list);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            currentProjectId = extras.getInt("currentProjectId");
+            currentMainCategoryId = extras.getInt("currentMainCategoryId");
+        }
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-        categoryList=new JsonOperations().GetListByCategory(0);
+        categoryList=new JsonOperations().GetListByCategory(currentMainCategoryId,currentMainCategoryId);
         adapter = new CategoryListAdapter(this, categoryList);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,11 +62,22 @@ public class TitleListActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 Integer id = categoryList.get(position).getId();
                 ArrayList<Category> categoryList = new ArrayList<Category>();
-                categoryList=new JsonOperations().GetListByCategory(id);
+                categoryList=new JsonOperations().GetListByCategory(id,currentProjectId);
 
-                adapter.setCategoryList(categoryList);
-                Integer count = adapter.getItemCount();
-                adapter.notifyDataSetChanged();
+                if(categoryList.size()==0)
+                {
+                    Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                    intent.putExtra("currentProjectId", currentProjectId);
+                    intent.putExtra("currentMainCategoryId", id);
+                    startActivity(intent);
+
+                }
+                else
+                {
+                    adapter.setCategoryList(categoryList);
+                    Integer count = adapter.getItemCount();
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -65,6 +86,7 @@ public class TitleListActivity extends AppCompatActivity {
             }
         }));
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

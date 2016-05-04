@@ -10,16 +10,18 @@ import android.widget.TextView;
 
 import com.ayoka.vdfreport.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by ahmetyildirim on 27.4.2016.
  */
 public class MainActivityAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] web;
+    private final ArrayList<String> web;
     private final Integer[] imageId;
     public  MainActivityAdapter(Activity context,
-                      String[] web, Integer[] imageId) {
+                      ArrayList<String> web, Integer[] imageId) {
         super(context, R.layout.list_single, web);
         this.context = context;
         this.web = web;
@@ -33,7 +35,7 @@ public class MainActivityAdapter extends ArrayAdapter<String> {
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-        txtTitle.setText(web[position]);
+        txtTitle.setText(web.get(position));
 
         imageView.setImageResource(imageId[position]);
         return rowView;

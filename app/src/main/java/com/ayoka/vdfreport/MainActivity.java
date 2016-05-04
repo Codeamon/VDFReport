@@ -5,33 +5,27 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ayoka.Adapters.MainActivityAdapter;
 
+import com.ayoka.common.JsonOperations;
+
 public class MainActivity extends AppCompatActivity {
     ListView list;
 
     private Toolbar toolbar;
-    String[] web = {
-            "volkswagen doğuş finans",
-            "sigorta hizmetleri",
-            "faktoring"
-    } ;
+
     Integer[] imageId = {
             R.drawable.finance,
             R.drawable.insurance,
@@ -48,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        ImageButton btnFinans = (ImageButton) findViewById(R.id.imgBtnFinans);
         MainActivityAdapter adapter = new
-                MainActivityAdapter(MainActivity.this, web, imageId);
+                MainActivityAdapter(MainActivity.this, new JsonOperations().GetMainList(), imageId);
         list=(ListView)findViewById(R.id.menu_list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,19 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 }
-                switch (position)
-                {
-                    case 0:
-                    startActivity(new Intent(getApplicationContext(), TitleListActivity.class));
-                      break;
-//                  Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
 
-                    case 1:
-                        startActivity(new Intent(getApplicationContext(), ReportListActivityInsurance.class));
-                        break;
-                }
-
-//                Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
+                intent.putExtra("currentProjectId", position+1);
+                intent.putExtra("currentMainCategoryId", position+1);
+                startActivity(intent);
 
             }
         });
@@ -168,4 +154,5 @@ public class MainActivity extends AppCompatActivity {
         });
         anim.start();
     }
+
 }

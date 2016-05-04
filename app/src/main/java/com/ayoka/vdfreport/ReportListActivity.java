@@ -6,18 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.ayoka.Adapters.ReportAdapter;
-import com.ayoka.common.Constants;
-import com.ayoka.common.Reports;
+import com.ayoka.Model.Reports;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportListActivity extends AppCompatActivity {
     final List<Reports> reports=new ArrayList();
-
+    private int currentCategory=0;
+    private  int currentProjectId=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +47,31 @@ public class ReportListActivity extends AppCompatActivity {
 
     private void setReportList()
     {
+        /*
         reports.add(new Reports("Krediler", Constants.Companies.VDF.getValue(), "VDF kredileşme istatistikleri"));
         reports.add(new Reports("KHM", Constants.Companies.VDF.getValue(), "Kredi Hesaplama Makinesi Hesaplatma Reporu"));
         reports.add(new Reports("Poliçeler", Constants.Companies.Sigorta.getValue(), "VDF Sigorta Poliçeleşme Oranı"));
-    }
+*/
+        /*String json = new ReportList().ReportListJson;
+        try  {
+            JSONObject jsonObj = new JSONObject(json);
+            JSONArray jsonArrayList = jsonObj.optJSONArray("categoryList");
+            for(int i=0; i < jsonArrayList.length(); i++){
+                JSONObject jsonlistOnj = jsonArrayList.getJSONObject(i);
+
+                int Id = Integer.parseInt(jsonlistOnj.optString("Id").toString());
+                int ProjectId = Integer.parseInt(jsonlistOnj.optString("ProjectId").toString());
+                String CategoryName = jsonlistOnj.optString("CategoryName").toString();
+                int MainCategoryId = Integer.parseInt(jsonlistOnj.optString("MainCategoryId").toString());
+
+                if((MainCategoryId==currentCategory & ProjectId==currentProjectId)||
+                        (MainCategoryId==currentCategory & currentProjectId==0))
+                    reports.add(new Reports(CategoryName, ProjectId, CategoryName));
+            }
+
+        }
+        catch (JSONException ex){
+            ex.printStackTrace();      }
+   */ }
 
 }

@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ayoka.common.Reports;
+import com.ayoka.Model.Reports;
 
 public class ReportAdapter extends BaseAdapter {
 
@@ -52,7 +52,7 @@ public class ReportAdapter extends BaseAdapter {
 		TextView textView = 
 				(TextView) satirView.findViewById(R.id.reportname);
 		ImageView imageView = 
-				(ImageView) satirView.findViewById(R.id.reportsimge);
+				(ImageView) satirView.findViewById(R.id.img);
 
 		Reports kisi = mKisiListesi.get(position);
 

@@ -46,7 +46,6 @@ public class CategoryListAdapter  extends RecyclerView.Adapter<CategoryListRowHo
         holder.title.setText(category.getTitle());
         holder.desc.setText(category.getDesc());
 
-
     }
     @Override
     public int getItemCount() {

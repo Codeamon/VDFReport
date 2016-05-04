@@ -1,5 +1,7 @@
 package com.ayoka.fragments;
 
+import com.ayoka.Model.Reports;
+import com.ayoka.common.JsonOperations;
 import com.ayoka.vdfreport.MainActivity;
 import com.ayoka.vdfreport.R;
 import com.ayoka.vdfreport.ReportActivity;
@@ -29,6 +31,10 @@ import java.util.ArrayList;
  */
 public class ReportTab1Fragments extends Fragment implements  OnChartValueSelectedListener {
 
+    private int currentProjectId = 0;
+    private int currentMainCategoryId=0;
+    private int currentTabId=1;
+
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
         if (e == null)
@@ -45,26 +51,28 @@ public class ReportTab1Fragments extends Fragment implements  OnChartValueSelect
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            currentProjectId = extras.getInt("currentProjectId");
+            currentMainCategoryId = extras.getInt("currentMainCategoryId");
+        }
         ArrayList<View> entries_view = new ArrayList<>();
-
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4050f, 0));
-        entries.add(new BarEntry(8980f, 1));
-        entries.add(new BarEntry(6045f, 2));
-        entries.add(new BarEntry(12916f, 3));
-        entries.add(new BarEntry(18405f, 4));
-        entries.add(new BarEntry(9240f, 5));
-        entries.add(new BarEntry(6040f, 6));
+
+        ArrayList<String> labels = new ArrayList<String>();
+
+        JsonOperations jo= new JsonOperations();
+        ArrayList<Reports> reportsList = jo.GetReportByCategoryId(currentMainCategoryId,currentProjectId,currentTabId);
+        for (int i=0;i< reportsList.size();i++)
+        {
+            entries.add(new BarEntry(reportsList.get(i).getValue(),reportsList.get(i).getReportId()));
+            labels.add(reportsList.get(i).getTypeValue());
+        }
+
+
+
         BarDataSet dataset = new BarDataSet(entries, "# Aylar");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Ekim");
-        labels.add("Kasım");
-        labels.add("Aralık");
-        labels.add("Ocak");
-        labels.add("Şubat");
-        labels.add("Mart");
-        labels.add("Nisan");
 
         BarChart chart = new BarChart(getActivity().getApplicationContext());
       //  setContentView(chart);
