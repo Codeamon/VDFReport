@@ -133,10 +133,10 @@ public class JsonOperations {
     }
 
     private String reportJson(){
-        return "{\n" + this.reportDetailJsonKrediler+ "}";
+        return "{\n" + this.reportDetailJson+ "}";
     }
 
-    private String reportDetailJsonKrediler =
+    private String reportDetailJson =
             "\t\"report\":[\n" +
             "\t{\n" +
             "\t\"Id\" : \"0\",\n" +
