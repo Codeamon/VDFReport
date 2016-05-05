@@ -60,26 +60,26 @@ public class ReportTab1Fragments extends Fragment implements  OnChartValueSelect
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         ArrayList<String> labels = new ArrayList<String>();
-
+        String Description = "";
         JsonOperations jo= new JsonOperations();
-        ArrayList<Reports> reportsList = jo.GetReportByCategoryId(currentMainCategoryId,currentProjectId,currentTabId);
+        ArrayList<Reports> reportsList = jo.GetReportByCategoryId(currentMainCategoryId,currentProjectId,currentTabId, Description);
         for (int i=0;i< reportsList.size();i++)
         {
-            entries.add(new BarEntry(reportsList.get(i).getValue(),reportsList.get(i).getReportId()));
+            entries.add(new BarEntry(reportsList.get(i).getValue(),i));
             labels.add(reportsList.get(i).getTypeValue());
         }
 
 
 
-        BarDataSet dataset = new BarDataSet(entries, "# Aylar");
+        BarDataSet dataset = new BarDataSet(entries, "# ");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
         BarChart chart = new BarChart(getActivity().getApplicationContext());
-      //  setContentView(chart);
+
         BarData data = new BarData(labels, dataset);
 
         chart.setData(data);
-        chart.setDescription("Aylık Kredi Raporları");
+        chart.setDescription(Description);
         chart.animateY(3000);
 
 
@@ -92,31 +92,8 @@ public class ReportTab1Fragments extends Fragment implements  OnChartValueSelect
 
         chart.setOnChartValueSelectedListener(this);
 
-return chart;
-       // return inflater.inflate(R.layout.activity_report_tab1, container, false);
-    }
-
-
-    private View deneme()
-    {
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4050f, 0));
-        entries.add(new BarEntry(8980f, 1));
-        entries.add(new BarEntry(6045f, 2));
-
-        BarDataSet dataset = new BarDataSet(entries, "# Aylar");
-        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Ekim");
-        labels.add("Kasım");
-        labels.add("Aralık");
-
-
-        BarChart chart = new BarChart(getActivity().getApplicationContext());
-        //  setContentView(chart);
-        BarData data = new BarData(labels, dataset);
-        chart.setData(data);
-        chart.setDescription("Deneme Detay Ekranı");
         return chart;
+
     }
+
 }

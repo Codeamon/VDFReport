@@ -66,23 +66,9 @@ public class EnterActivity extends AppCompatActivity {
         iv.startAnimation(anim);
 
 
-        anim = AnimationUtils.loadAnimation(this, R.anim.translateright);
-        anim.reset();
-        iv = (ImageView) findViewById(R.id.splashsigorta);
-        iv.clearAnimation();
-        iv.startAnimation(anim);
 
 
-        anim = AnimationUtils.loadAnimation(this, R.anim.traslateleft);
-        anim.reset();
-        iv = (ImageView) findViewById(R.id.splashfactoring);
-        iv.clearAnimation();
-        iv.startAnimation(anim);
 
-
-       ImageView iv3 = (ImageView) findViewById(R.id.splashfactoring);
-       iv3.clearAnimation();
-       iv3.startAnimation(anim);
        splashTread = new Thread() {
            @Override
            public void run() {

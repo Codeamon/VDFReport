@@ -15,21 +15,16 @@ public class TestClass_ReportTab1 {
         numbervalues = new ArrayList<String>();
         labels = new ArrayList<String>();
 
-        labels.add("Ekim");
-        labels.add("Kasım");
-        labels.add("Aralık");
         labels.add("Ocak");
         labels.add("Şubat");
         labels.add("Mart");
         labels.add("Nisan");
 
-        numbervalues.add("4050");
-        numbervalues.add("8980");
-        numbervalues.add("6045");
         numbervalues.add("12916");
         numbervalues.add("1840");
         numbervalues.add("9240");
         numbervalues.add("6040");
+
     }
     public ArrayList<String> getList()
     {

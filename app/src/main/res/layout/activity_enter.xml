@@ -8,14 +8,6 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/splashsigorta"
-        android:background="@drawable/splashsigorta"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="5dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -23,16 +15,8 @@
         android:id="@+id/splashvdf"
         android:background="@drawable/splashvdf"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="40dp"
+       />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/splashfactoring"
-        android:background="@drawable/splashfactoring"
-
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="100dp" />
 
 </FrameLayout>
