@@ -3,6 +3,7 @@ package com.ayoka.vdfreport;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +20,25 @@ import android.widget.Toast;
 
 import com.ayoka.Adapters.MainActivityAdapter;
 
+import com.ayoka.Helper.ShareScreenshot;
+import com.ayoka.Interfaces.InterfaceController;
+import com.ayoka.Model.DepartmanModel;
+import com.ayoka.common.Constants;
 import com.ayoka.common.JsonOperations;
+
+import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
     ListView list;
-
+    private RestAdapter restAdapter;
+    private InterfaceController restInterface;
     private Toolbar toolbar;
-
+    private ProgressDialog progressDialog;
     Integer[] imageId = {
             R.drawable.finance,
             R.drawable.insurance,
@@ -40,38 +53,58 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-//        ImageButton btnFinans = (ImageButton) findViewById(R.id.imgBtnFinans);
-        MainActivityAdapter adapter = new
-                MainActivityAdapter(MainActivity.this, new JsonOperations().GetMainList(), imageId);
-        list=(ListView)findViewById(R.id.menu_list);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+        final ArrayList<String> mainReportsList = new ArrayList<String>();
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.URL)
+                .build();
+
+        restInterface = restAdapter.create(InterfaceController.class);
+
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Yükleniyor..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        restInterface.GetDepartments("1",new Callback<DepartmanModel[]>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void success(DepartmanModel[] departmanModels, Response response) {
 
-                if(id==R.id.exit)
-                {
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                for (DepartmanModel departmanModel : departmanModels) {
+                    mainReportsList.add(departmanModel.getDepartmentName());
                 }
+                progressDialog.cancel();
 
-                Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
-                intent.putExtra("currentProjectId", position+1);
-                intent.putExtra("currentMainCategoryId", position+1);
-                startActivity(intent);
+                MainActivityAdapter adapter = new
+                        MainActivityAdapter(MainActivity.this, mainReportsList, imageId);
+                list=(ListView)findViewById(R.id.menu_list);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+
+                        if(id==R.id.exit)
+                        {
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        }
+
+                        Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
+                        intent.putExtra("currentProjectId", position+1);
+                        intent.putExtra("currentMainCategoryId", position+1);
+                        startActivity(intent);
+
+                    }
+                });
+            }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+                String merror = retrofitError.getMessage();
+                Toast.makeText(getApplicationContext(),merror,Toast.LENGTH_LONG).show();
             }
         });
-
-//        btnFinans.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getApplicationContext(),ReportListActivity.class));
-//                //deneme
-//            }
-//        });
-
 
     }
     @Override
@@ -97,8 +130,18 @@ public class MainActivity extends AppCompatActivity {
         {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-
+        if(id==R.id.action_share)
+        {
+            share();
+        }
         return super.onOptionsItemSelected(item);
+    }
+    public void share(){//Share butonu tıklandığında çalışır
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); //Share intentini oluşturuyoruz
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Mesaj Konu");//share mesaj konusu
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "içerik");//share mesaj içeriği
+        startActivity(Intent.createChooser(sharingIntent, "Paylaşmak İçin Seçiniz"));//Share intentini başlığı ile birlikte başlatıyoruz
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

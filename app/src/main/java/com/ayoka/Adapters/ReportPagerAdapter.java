@@ -11,6 +11,7 @@ import com.ayoka.fragments.ReportTab2Fragments;
 public class ReportPagerAdapter extends FragmentStatePagerAdapter {
 	int mNumOfTabs;
 
+	public ReportTab1Fragments tab1;
 	public ReportPagerAdapter(FragmentManager fm, int NumOfTabs) {
 		super(fm);
 		this.mNumOfTabs = NumOfTabs;
@@ -21,7 +22,7 @@ public class ReportPagerAdapter extends FragmentStatePagerAdapter {
 
 		switch (position) {
 			case 0:
-				ReportTab1Fragments tab1 = new ReportTab1Fragments();
+				tab1 = new ReportTab1Fragments();
 				return tab1;
 			case 1:
 				ReportTab2Fragments tab2 = new ReportTab2Fragments();

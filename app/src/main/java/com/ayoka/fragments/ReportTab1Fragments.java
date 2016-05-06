@@ -34,7 +34,7 @@ public class ReportTab1Fragments extends Fragment implements  OnChartValueSelect
     private int currentProjectId = 0;
     private int currentMainCategoryId=0;
     private int currentTabId=1;
-
+    public  BarChart chart;
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
         if (e == null)
@@ -74,7 +74,7 @@ public class ReportTab1Fragments extends Fragment implements  OnChartValueSelect
         BarDataSet dataset = new BarDataSet(entries, "# ");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        BarChart chart = new BarChart(getActivity().getApplicationContext());
+        chart = new BarChart(getActivity().getApplicationContext());
 
         BarData data = new BarData(labels, dataset);
 

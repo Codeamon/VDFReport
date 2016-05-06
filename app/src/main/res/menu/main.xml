@@ -22,4 +22,10 @@
         android:title="User"
         android:icon="@drawable/user3"
         app:showAsAction="ifRoom"></item>
+    <item android:id="@+id/action_share"
+        android:orderInCategory="600"
+        android:icon="@drawable/ic_action_share"
+        android:title="Paylaş"
+        app:showAsAction="always"></item>
+
 </menu>

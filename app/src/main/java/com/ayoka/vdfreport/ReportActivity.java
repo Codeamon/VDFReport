@@ -12,10 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ayoka.Adapters.ReportPagerAdapter;
+import com.ayoka.Helper.ShareScreenshot;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -36,6 +38,8 @@ public class ReportActivity extends AppCompatActivity {
     private SeekBar mSeekBarX, mSeekBarY;
     private TextView tvX, tvY;
     private Typeface mTf;
+    public View view;
+    ReportPagerAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +54,7 @@ public class ReportActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final ReportPagerAdapter adapter = new ReportPagerAdapter
+         adapter = new ReportPagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -159,6 +163,12 @@ public class ReportActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.exit:
                 startActivity (new Intent(getApplicationContext(),LoginActivity.class));
+                return true;
+            case R.id.action_share:
+
+                view = adapter.tab1.chart;
+                ShareScreenshot ss=new ShareScreenshot(ReportActivity.this);
+                ss.shareImage(view);
                 return true;
 
         }

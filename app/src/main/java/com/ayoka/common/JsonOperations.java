@@ -1,24 +1,43 @@
 package com.ayoka.common;
 
 import android.util.EventLogTags;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ayoka.Interfaces.InterfaceController;
 import com.ayoka.Model.Category;
+import com.ayoka.Model.DepartmanModel;
 import com.ayoka.Model.Reports;
+import com.squareup.okhttp.OkHttpClient;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import retrofit.RetrofitError;
+import retrofit.client.OkClient;
+import retrofit.client.Response;
+
 
 
 /**
  * Created by OsmanKorcan on 1.5.2016.
  */
+
+
 public class JsonOperations {
+    public static final OkHttpClient clienteOkHttp = new OkHttpClient();
+    public static final long timeOutSecond = 100;
+    public RestAdapter restAdapter;
+    public InterfaceController restInterface;
     private String categoryJson = "{\n" +
             "\t\"categoryList\":[\n" +
             "\t{\n" +
@@ -81,25 +100,26 @@ public class JsonOperations {
 
     public ArrayList<String> GetMainList()
     {
-        ArrayList<String> mainReportsList = new ArrayList<String>();
-        try  {
-            JSONObject jsonObj = new JSONObject(categoryJson);
-            JSONArray jsonArrayList = jsonObj.optJSONArray("categoryList");
-            for(int i=0; i < jsonArrayList.length(); i++){
-                JSONObject jsonlistOnj = jsonArrayList.getJSONObject(i);
+        final ArrayList<String> mainReportsList = new ArrayList<String>();
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.URL)
+                .build();
 
-                int Id = Integer.parseInt(jsonlistOnj.optString("Id").toString());
-                int ProjectId = Integer.parseInt(jsonlistOnj.optString("ProjectId").toString());
-                String CategoryName = jsonlistOnj.optString("CategoryName").toString();
-                int MainCategoryId = Integer.parseInt(jsonlistOnj.optString("MainCategoryId").toString());
+        restInterface = restAdapter.create(InterfaceController.class);
 
-                if( MainCategoryId==0 )
-                    mainReportsList.add(CategoryName);
+        restInterface.GetDepartments("1",new Callback<DepartmanModel[]>() {
+            @Override
+            public void success(DepartmanModel[] departmanModels, Response response) {
+
+                for (DepartmanModel departmanModel : departmanModels) {
+                        mainReportsList.add(departmanModel.getDepartmentName());
+                }
             }
-
-        }
-        catch (JSONException ex){
-            ex.printStackTrace();      }
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+            }
+        });
         return mainReportsList;
 
     }
