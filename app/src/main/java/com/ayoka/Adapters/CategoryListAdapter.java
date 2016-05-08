@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ayoka.Model.Category;
+import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.vdfreport.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,14 +24,14 @@ import java.util.List;
  * Created by ahmetyildirim on 1.5.2016.
  */
 public class CategoryListAdapter  extends RecyclerView.Adapter<CategoryListRowHolder> {
-    public void setCategoryList(List<Category> categoryList) {
+    public void setCategoryList(List<CategoryReportModel> categoryList) {
         this.categoryList = categoryList;
     }
 
     // Set numbers of List in RecyclerView.
-    private List<Category> categoryList;
+    private List<CategoryReportModel> categoryList;
     private Context context;
-    public CategoryListAdapter(Context context, List<Category> categoryList) {
+    public CategoryListAdapter(Context context, ArrayList<CategoryReportModel> categoryList) {
         this.context = context;
         this.categoryList = categoryList;
     }
@@ -42,9 +44,9 @@ public class CategoryListAdapter  extends RecyclerView.Adapter<CategoryListRowHo
     }
     @Override
     public void onBindViewHolder(CategoryListRowHolder holder, int position) {
-        Category category = categoryList.get(position);
-        holder.title.setText(category.getTitle());
-        holder.desc.setText(category.getDesc());
+        CategoryReportModel category = categoryList.get(position);
+        holder.title.setText(category.getCategoryReportname());
+        holder.desc.setText(category.getCategoryReportname());
 
     }
     @Override

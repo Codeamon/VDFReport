@@ -1,6 +1,7 @@
 package com.ayoka.vdfreport;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,24 +11,40 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ayoka.Adapters.CategoryListAdapter;
 
+import com.ayoka.Adapters.MainActivityAdapter;
+import com.ayoka.Interfaces.InterfaceController;
 import com.ayoka.Listener.RecyclerTouchListener;
 import com.ayoka.Model.Category;
+import com.ayoka.Model.CategoryReportModel;
+import com.ayoka.Model.DepartmanModel;
+import com.ayoka.common.Constants;
 import com.ayoka.common.JsonOperations;
 
 import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by ahmetyildirim on 3.5.2016.
  */
 public class TitleListActivity extends AppCompatActivity {
+
+    private RestAdapter restAdapter;
+    private InterfaceController restInterface;
+    private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private ProgressDialog pDialog;
     private CategoryListAdapter adapter;
-    public ArrayList<Category> categoryList = new ArrayList<Category>();
+    public ArrayList<CategoryReportModel> categoryList = new ArrayList<CategoryReportModel>();
 
     private int currentProjectId = 0;
     private int currentMainCategoryId=0;
@@ -48,43 +65,53 @@ public class TitleListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.URL)
+                .build();
 
-        categoryList=new JsonOperations().GetListByCategory(currentMainCategoryId,currentMainCategoryId);
-        adapter = new CategoryListAdapter(this, categoryList);
+        restInterface = restAdapter.create(InterfaceController.class);
+
+//        progressDialog = new ProgressDialog(TitleListActivity.this);
+//        progressDialog.setMessage("Yükleniyor..");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+        final Context context = this;
+        restInterface.GetCategoryReportList(Integer.toString(currentMainCategoryId), new Callback<CategoryReportModel[]>() {
+            @Override
+            public void success(CategoryReportModel[] categoryReportModels, Response response) {
+
+                for (CategoryReportModel categoryReportModel : categoryReportModels) {
+                    categoryList.add(categoryReportModel);
+                }
+//                progressDialog.cancel();
+                adapter = new CategoryListAdapter(context, categoryList);
+                recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+                String merror = retrofitError.getMessage();
+                Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+
+
+    private void SetLayout()
+    {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
 
         recyclerView.setAdapter(adapter);
-
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Integer id = categoryList.get(position).getId();
-                ArrayList<Category> categoryList = new ArrayList<Category>();
-                categoryList=new JsonOperations().GetListByCategory(id,currentProjectId);
-
-                if(categoryList.size()==0)
-                {
-                    Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                    intent.putExtra("currentProjectId", currentProjectId);
-                    intent.putExtra("currentMainCategoryId", id);
-                    startActivity(intent);
-
-                }
-                else
-                {
-                    adapter.setCategoryList(categoryList);
-                    Integer count = adapter.getItemCount();
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "uzun tıkladın", Toast.LENGTH_SHORT).show();
-            }
-        }));
     }
 
     @Override

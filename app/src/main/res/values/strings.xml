@@ -35,6 +35,7 @@
     </string>
     <string name="username_required">Lütfen kullanıcı Adı Giriniz.</string>
     <string name="password_required">Lütfen şifre Giriniz.</string>
+    <string name="incorrect_password">Kullanıcı Adı veya şifre hatalı</string>
 
     <string name="welcome">Lütfen şifre Giriniz.</string>
     <string name="username">Kullanıcı Adı</string>

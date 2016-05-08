@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * Created by ahmetyildirim on 3.5.2016.
@@ -55,7 +56,7 @@ public class EnterActivity extends AppCompatActivity {
     private void StartAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
-        FrameLayout l = (FrameLayout) findViewById(R.id.lin_lay);
+        RelativeLayout l = (RelativeLayout) findViewById(R.id.lin_lay);
         l.clearAnimation();
         l.startAnimation(anim);
 

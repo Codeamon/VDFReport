@@ -3,7 +3,9 @@ package com.ayoka.vdfreport;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -24,15 +26,29 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ayoka.Adapters.MainActivityAdapter;
+import com.ayoka.Interfaces.InterfaceController;
+import com.ayoka.Model.DepartmanModel;
+import com.ayoka.Model.LoginInfoModel;
+import com.ayoka.common.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -41,6 +57,9 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    public RestAdapter restAdapter;
+    public InterfaceController restInterface;
+    public ProgressDialog progressDialog;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -73,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if ( id == EditorInfo.IME_NULL) {
+                if ( id == EditorInfo.IME_NULL || id== EditorInfo.IME_ACTION_SEND) {
                     attemptLogin();
                     return true;
                 }
@@ -119,8 +138,38 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+            restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(Constants.URL)
+                    .build();
 
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                restInterface = restAdapter.create(InterfaceController.class);
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage("Giriş yapılıyor..");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+            restInterface.LoginReport(username,password,new Callback<LoginInfoModel>() {
+                @Override
+                public void success(LoginInfoModel loginInfoModel, Response response) {
+                    progressDialog.cancel();
+                    if (loginInfoModel.getToken() != null) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
+                    else
+                    {
+                        mPasswordView.setError(getString(R.string.incorrect_password));
+                    }
+                }
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    progressDialog.cancel();
+                    retrofitError.printStackTrace(); //to see if you have errors
+                    String merror = retrofitError.getMessage();
+                    Toast.makeText(getApplicationContext(),merror,Toast.LENGTH_LONG).show();
+                }
+            });
+
+
         }
     }
 

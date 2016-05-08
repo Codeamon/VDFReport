@@ -3,7 +3,7 @@ package com.ayoka.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CategoryReport {
+public class CategoryReportModel {
 
     @SerializedName("Id")
     @Expose
