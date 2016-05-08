@@ -27,4 +27,7 @@ public interface InterfaceController {
     @GET("/GetCategoryReportList")
     public void GetCategoryReportList(@Query("departmentId") String departmentId,Callback<CategoryReportModel[]> callback);
 
+    @GET("/GetSubCategoryReportList")
+    public void GetSubCategoryReportList(@Query("categoryId") String categoryId,Callback<CategoryReportModel[]> callback);
+
 }

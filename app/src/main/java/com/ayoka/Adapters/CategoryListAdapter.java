@@ -4,6 +4,7 @@ package com.ayoka.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,14 @@ public class CategoryListAdapter  extends RecyclerView.Adapter<CategoryListRowHo
         CategoryReportModel category = categoryList.get(position);
         holder.title.setText(category.getCategoryReportname());
         holder.desc.setText(category.getCategoryReportname());
+        if(category.getType()==1)
+        {
+            holder.avatar.setImageResource(R.drawable.list_item);
+        }
+        else
+        {
+            holder.avatar.setImageResource(R.drawable.ic_folder_open_black_24dp);
+        }
 
     }
     @Override

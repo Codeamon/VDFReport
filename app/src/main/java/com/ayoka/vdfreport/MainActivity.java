@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
-                        intent.putExtra("currentProjectId", position+1);
-                        intent.putExtra("currentMainCategoryId", position+1);
+                        intent.putExtra("departmentId", position+1);
+                        intent.putExtra("mainCategoryId", 0);
                         startActivity(intent);
 
                     }

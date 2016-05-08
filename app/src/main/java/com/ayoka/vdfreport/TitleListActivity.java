@@ -46,8 +46,8 @@ public class TitleListActivity extends AppCompatActivity {
     private CategoryListAdapter adapter;
     public ArrayList<CategoryReportModel> categoryList = new ArrayList<CategoryReportModel>();
 
-    private int currentProjectId = 0;
-    private int currentMainCategoryId=0;
+    private int departmentId = 0;
+    private int mainCategoryId=0;
     private Toolbar toolbar;
 
     @Override
@@ -57,8 +57,8 @@ public class TitleListActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            currentProjectId = extras.getInt("currentProjectId");
-            currentMainCategoryId = extras.getInt("currentMainCategoryId");
+            departmentId = extras.getInt("departmentId");
+            mainCategoryId = extras.getInt("mainCategoryId");
         }
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -76,30 +76,97 @@ public class TitleListActivity extends AppCompatActivity {
 //        progressDialog.setCancelable(false);
 //        progressDialog.show();
         final Context context = this;
-        restInterface.GetCategoryReportList(Integer.toString(currentMainCategoryId), new Callback<CategoryReportModel[]>() {
-            @Override
-            public void success(CategoryReportModel[] categoryReportModels, Response response) {
+       if (mainCategoryId == 0){
+            restInterface.GetCategoryReportList(Integer.toString(departmentId), new Callback<CategoryReportModel[]>() {
+                @Override
+                public void success(CategoryReportModel[] categoryReportModels, Response response) {
 
-                for (CategoryReportModel categoryReportModel : categoryReportModels) {
-                    categoryList.add(categoryReportModel);
-                }
+                    for (CategoryReportModel categoryReportModel : categoryReportModels) {
+                        categoryList.add(categoryReportModel);
+                    }
 //                progressDialog.cancel();
-                adapter = new CategoryListAdapter(context, categoryList);
-                recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                adapter.notifyDataSetChanged();
-                recyclerView.setAdapter(adapter);
+                    adapter = new CategoryListAdapter(context, categoryList);
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
 
-            }
+                    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, recyclerView, new RecyclerTouchListener.ClickListener() {
+                        @Override
+                        public void onClick(View view, int position) {
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-                String merror = retrofitError.getMessage();
-                Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
-            }
-        });
+                            CategoryReportModel model = categoryList.get(position);
+                            Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
+                            intent.putExtra("departmentId", departmentId);
+                            intent.putExtra("mainCategoryId", model.getId());
+                            startActivity(intent);
 
+
+                        }
+
+                        @Override
+                        public void onLongClick(View view, int position) {
+                            Toast.makeText(getApplicationContext(), "uzun tıkladın", Toast.LENGTH_SHORT).show();
+                        }
+                    }));
+
+
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
+                    String merror = retrofitError.getMessage();
+                    Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else
+        {
+            restInterface.GetSubCategoryReportList(Integer.toString(mainCategoryId), new Callback<CategoryReportModel[]>() {
+                @Override
+                public void success(CategoryReportModel[] categoryReportModels, Response response) {
+
+                    for (CategoryReportModel categoryReportModel : categoryReportModels) {
+                        categoryList.add(categoryReportModel);
+                    }
+//                progressDialog.cancel();
+                    adapter = new CategoryListAdapter(context, categoryList);
+                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+
+                    recyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, recyclerView, new RecyclerTouchListener.ClickListener() {
+                        @Override
+                        public void onClick(View view, int position) {
+
+                            CategoryReportModel model = categoryList.get(position);
+                            Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
+                            intent.putExtra("departmentId", departmentId);
+                            intent.putExtra("mainCategoryId", model.getId());
+                            startActivity(intent);
+
+
+                        }
+
+                        @Override
+                        public void onLongClick(View view, int position) {
+                            Toast.makeText(getApplicationContext(), "uzun tıkladın", Toast.LENGTH_SHORT).show();
+                        }
+                    }));
+
+
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
+                    String merror = retrofitError.getMessage();
+                    Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
 

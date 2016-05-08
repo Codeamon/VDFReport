@@ -25,7 +25,7 @@
         android:layout_width="@dimen/avator_size"
         android:layout_height="@dimen/avator_size"
         android:scaleType="centerCrop"
-        android:src="@drawable/list_item" />
+        android:src="@drawable/ic_folder_open_black_24dp" />
 
     <TextView
         android:id="@+id/list_title"
