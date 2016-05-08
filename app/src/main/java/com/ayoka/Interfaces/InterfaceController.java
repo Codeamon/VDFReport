@@ -3,6 +3,7 @@ package com.ayoka.Interfaces;
 import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.Model.DepartmanModel;
 import com.ayoka.Model.LoginInfoModel;
+import com.ayoka.Model.ReportDetail;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -29,5 +30,7 @@ public interface InterfaceController {
 
     @GET("/GetSubCategoryReportList")
     public void GetSubCategoryReportList(@Query("categoryId") String categoryId,Callback<CategoryReportModel[]> callback);
+    @GET("/getreport")
+    public void getreport(@Query("reportDetailId") Integer reportId, @Query("filter") String filter, Callback<ReportDetail> callback);
 
 }

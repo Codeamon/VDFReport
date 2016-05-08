@@ -71,10 +71,10 @@ public class TitleListActivity extends AppCompatActivity {
 
         restInterface = restAdapter.create(InterfaceController.class);
 
-//        progressDialog = new ProgressDialog(TitleListActivity.this);
-//        progressDialog.setMessage("Yükleniyor..");
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
+        progressDialog = new ProgressDialog(TitleListActivity.this);
+        progressDialog.setMessage("Yükleniyor..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         final Context context = this;
        if (mainCategoryId == 0){
             restInterface.GetCategoryReportList(Integer.toString(departmentId), new Callback<CategoryReportModel[]>() {
@@ -84,7 +84,7 @@ public class TitleListActivity extends AppCompatActivity {
                     for (CategoryReportModel categoryReportModel : categoryReportModels) {
                         categoryList.add(categoryReportModel);
                     }
-//                progressDialog.cancel();
+                   progressDialog.cancel();
                     adapter = new CategoryListAdapter(context, categoryList);
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -96,12 +96,17 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
-                            intent.putExtra("departmentId", departmentId);
-                            intent.putExtra("mainCategoryId", model.getId());
-                            startActivity(intent);
-
-
+                            if(model.getType()==1){
+                                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                                intent.putExtra("reportId", model.getId());
+                                startActivity(intent);
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
+                                intent.putExtra("departmentId", departmentId);
+                                intent.putExtra("mainCategoryId", model.getId());
+                                startActivity(intent);
+                            }
                         }
 
                         @Override
@@ -109,12 +114,12 @@ public class TitleListActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "uzun tıkladın", Toast.LENGTH_SHORT).show();
                         }
                     }));
-
-
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
+
+//                    progressDialog.cancel();
                     retrofitError.printStackTrace(); //to see if you have errors
                     String merror = retrofitError.getMessage();
                     Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
@@ -130,7 +135,7 @@ public class TitleListActivity extends AppCompatActivity {
                     for (CategoryReportModel categoryReportModel : categoryReportModels) {
                         categoryList.add(categoryReportModel);
                     }
-//                progressDialog.cancel();
+                    progressDialog.cancel();
                     adapter = new CategoryListAdapter(context, categoryList);
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -142,12 +147,18 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
-                            intent.putExtra("departmentId", departmentId);
-                            intent.putExtra("mainCategoryId", model.getId());
-                            startActivity(intent);
+                            if(model.getType()==1){
 
-
+                                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                                intent.putExtra("reportId", model.getId());
+                                startActivity(intent);
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
+                                intent.putExtra("departmentId", departmentId);
+                                intent.putExtra("mainCategoryId", model.getId());
+                                startActivity(intent);
+                            }
                         }
 
                         @Override
