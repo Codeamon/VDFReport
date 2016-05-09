@@ -3,7 +3,11 @@ package com.ayoka.vdfreport;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,6 +59,22 @@ public class TitleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_list);
 
+
+//        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+//        collapsingToolbarLayout.setTitle("Collapsing");
+//        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+//        collapsingToolbarLayout.setContentScrimColor(Color.BLUE);
+//        collapsingToolbarLayout.setStatusBarScrimColor(Color.GREEN);
+//        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//            @Override
+//            public void onGenerated(Palette palette) {
+//                int primaryDark = getResources().getColor(R.color.primary_dark);
+//                int primary = getResources().getColor(R.color.primary);
+//                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
+//                collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkVibrantColor(primaryDark));
+//            }
+//        });
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             departmentId = extras.getInt("departmentId");
@@ -63,7 +83,12 @@ public class TitleListActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_folder_open_black_18dp);
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.URL)
@@ -215,7 +240,10 @@ public class TitleListActivity extends AppCompatActivity {
         {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-
+        if(id==android.R.id.home)
+        {
+            onBackPressed();
+        }
         return super.onOptionsItemSelected(item);
     }
 }

@@ -6,15 +6,24 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +43,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
+    AppBarLayout appBarLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    ImageView image;
+    AppCompatTextView textview;
     ListView list;
     private RestAdapter restAdapter;
     private InterfaceController restInterface;
@@ -47,20 +60,33 @@ public class MainActivity extends AppCompatActivity {
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        image = (ImageView) findViewById(R.id.image);
+        image.setImageResource(R.drawable.avatar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        appBarLayout=(AppBarLayout)findViewById(R.id.app_bar_layout);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle("VDF Rapor");
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        setPalette();
+        appBarLayout.setExpanded(false);
+        textview=(AppCompatTextView)findViewById(R.id.txtfullname);
 
-
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            textview.setText(extras.getString("Username"));
+        }
+       toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+       setSupportActionBar(toolbar);
+       getSupportActionBar().setDisplayShowTitleEnabled(false);
         final ArrayList<String> mainReportsList = new ArrayList<String>();
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.URL)
                 .build();
 
         restInterface = restAdapter.create(InterfaceController.class);
-
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Yükleniyor..");
         progressDialog.setCancelable(false);
@@ -79,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivityAdapter(MainActivity.this, mainReportsList, imageId);
                 list=(ListView)findViewById(R.id.menu_list);
                 list.setAdapter(adapter);
+                setListViewHeightBasedOnChildren(list);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
@@ -107,6 +134,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    private void setPalette() {
+        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
+                int primary = getResources().getColor(R.color.colorPrimary);
+                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
+                collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkVibrantColor(primaryDark));
+            }
+        });
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -126,14 +166,14 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
-        if(id==R.id.action_home)
-        {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-        if(id==R.id.action_share)
-        {
-            share();
-        }
+//        if(id==R.id.action_home)
+//        {
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//        }
+//        if(id==R.id.action_share)
+//        {
+//            share();
+//        }
         return super.onOptionsItemSelected(item);
     }
     public void share(){//Share butonu tıklandığında çalışır
@@ -197,5 +237,24 @@ public class MainActivity extends AppCompatActivity {
         });
         anim.start();
     }
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
 
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 }

@@ -28,6 +28,16 @@
         <item name="android:background">@drawable/custom_btn_shakespeare</item>
         <item name="android:padding">10dip</item>
     </style>
-
+    <style name="fab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:src">@android:drawable/ic_menu_rotate</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">6dp</item>
+        <item name="android:color">@color/accent</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
 
 </resources>

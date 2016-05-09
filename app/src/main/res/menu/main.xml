@@ -4,11 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item
-        android:id="@+id/exit"
-        android:orderInCategory="100"
-        android:title="@string/exit"
-        app:showAsAction="never" />
+
 
     <item
         android:id="@+id/action_home"
@@ -17,15 +13,29 @@
         android:icon="@drawable/home"
         app:showAsAction="ifRoom"></item>
     <item
-        android:id="@+id/action_user"
-        android:orderInCategory="300"
-        android:title="User"
-        android:icon="@drawable/user3"
-        app:showAsAction="ifRoom"></item>
-    <item android:id="@+id/action_share"
-        android:orderInCategory="600"
-        android:icon="@drawable/ic_action_share"
-        android:title="Paylaş"
-        app:showAsAction="always"></item>
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Hesap Ayarları"
+        app:showAsAction="never"></item>
+    <item
+        android:id="@+id/action_privacy"
+        android:orderInCategory="100"
+        android:title="Gizlilik Politikası"
+        app:showAsAction="never"></item>
+    <item
+        android:id="@+id/action_help"
+        android:orderInCategory="100"
+        android:title="Yardım ve Geri Bildirim"
+        app:showAsAction="never"></item>
+    <item
+        android:id="@+id/exit"
+        android:orderInCategory="100"
+        android:title="@string/exit"
+        app:showAsAction="never" />
+    <!--<item android:id="@+id/action_share"-->
+        <!--android:orderInCategory="600"-->
+        <!--android:icon="@drawable/ic_action_share"-->
+        <!--android:title="Paylaş"-->
+        <!--app:showAsAction="always"></item>-->
 
 </menu>

@@ -151,9 +151,9 @@ public class InsComReportActivity extends AppCompatActivity {
             case R.id.exit:
                 startActivity (new Intent(getApplicationContext(),LoginActivity.class));
                 return true;
-            case R.id.action_home:
-                startActivity (new Intent(getApplicationContext(),MainActivity.class));
-                return true;
+//            case R.id.action_home:
+//                startActivity (new Intent(getApplicationContext(),MainActivity.class));
+//                return true;
 
         }
         return false;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00e5ff</color>
-    <color name="colorPrimaryDark">#00b8d4</color>
+    <color name="colorPrimary">#00b8d4</color>
+    <color name="colorPrimaryDark">#009BB3</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
@@ -11,6 +11,8 @@
     <color name="medium_grey">#9E9E9E</color>
     <color name="button_grey">#757575</color>
 
+    <color name="rippelColor">#FFFFFF</color>
+    <color name="accent">#FFEB3B</color>
 
 
 </resources>

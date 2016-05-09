@@ -143,12 +143,12 @@ public class ReportActivity extends AppCompatActivity {
             case R.id.exit:
                 startActivity (new Intent(getApplicationContext(),LoginActivity.class));
                 return true;
-            case R.id.action_share:
-
-//                view = adapter.tab1;
-//                ShareScreenshot ss=new ShareScreenshot(ReportActivity.this);
-//                ss.shareImage(view);
-                return true;
+//            case R.id.action_share:
+//
+////                view = adapter.tab1;
+////                ShareScreenshot ss=new ShareScreenshot(ReportActivity.this);
+////                ss.shareImage(view);
+//                return true;
 
         }
         return false;

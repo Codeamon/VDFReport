@@ -153,7 +153,13 @@ public class LoginActivity extends AppCompatActivity {
                 public void success(LoginInfoModel loginInfoModel, Response response) {
                     progressDialog.cancel();
                     if (loginInfoModel.getToken() != null) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("Username",loginInfoModel.getName() +" " +  loginInfoModel.getSurname());
+                        intent.putExtra("Email", loginInfoModel.getEmail());
+                        startActivity(intent);
+
+
+
                     }
                     else
                     {

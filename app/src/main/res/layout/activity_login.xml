@@ -36,6 +36,8 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/splashvdf" />
                 </RelativeLayout>
+
+
             </RelativeLayout>
 
             <RelativeLayout
