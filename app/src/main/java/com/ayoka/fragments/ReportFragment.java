@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ayoka.Charts.BarChartModel;
+import com.ayoka.Charts.PieChartModel;
 import com.ayoka.Model.ReportDetail;
 import com.ayoka.Model.Reports;
 import com.ayoka.common.JsonOperations;
@@ -26,6 +28,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by ahmetyildirim on 8.5.2016.
@@ -33,74 +36,35 @@ import java.util.List;
 public class ReportFragment extends Fragment {
     public ReportDetail.ReportList reportList;
     public int reportType=1;
+    public Objects report;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         List<ReportDetail.ReportValue> values=reportList.getReportValues();
+/*
+        1 barchart
+                2 horizontal barchart
+                3 piechart
+                4multiple barschart
+                5 line chart legent
+*/
 
+        switch (reportType) {
+            case 1:
+                BarChartModel barChartModel = new BarChartModel();
+                return barChartModel.GetChart(getActivity().getApplicationContext(), reportList);
+            case 2:
 
-        if(reportType==1)
-        {
-            ArrayList<BarEntry> entries = new ArrayList<>();
-            for(int i=0; i<values.size(); i++)
-            {
-                String value=values.get(i).getValueName().replace(',','.');
-                entries.add(new BarEntry(Float.valueOf(value), i));
-            }
-            BarDataSet dataset = new BarDataSet(entries, "# "+ "'@ValueType'");
-            dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-            ArrayList<String> labels = new ArrayList<String>();
-            for(int i=0; i<values.size(); i++)
-            {
-                labels.add(values.get(i).getValueTypeName());
-            }
+                break;
+            case 3:
+                PieChartModel pieChartModel = new PieChartModel();
+                return pieChartModel.GetChart(getActivity().getApplicationContext(), reportList);
+            default:
 
-            BarChart chart = new BarChart(getActivity().getApplicationContext());
-            //  setContentView(chart);
-            BarData data = new BarData(labels, dataset);
-            chart.setData(data);
-            chart.setDescription(reportList.getDescription());
-            chart.animateY(3000);
-
-            return chart;
+                break;
         }
-        else {
 
-            TestClass_ReportTab1 tc = new TestClass_ReportTab1();
-            float totalValue=0;
-            for(int i=0; i<values.size(); i++)
-            {
-                String value=values.get(i).getValueName().replace(',','.');
-                totalValue+=Float.valueOf(value);
-            }
-
-            ArrayList<Entry> entries = new ArrayList<>();
-            for(int i=0; i<values.size(); i++)
-            {
-                String value=values.get(i).getValueName().replace(',','.');
-                float floatValue=Float.valueOf(value);
-                entries.add(new Entry(floatValue/totalValue, i));
-            }
-
-            PieDataSet dataset = new PieDataSet(entries, "# Total " + totalValue);
-            dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-            dataset.setSliceSpace(2f);
-            dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
-
-            ArrayList<String> labels = new ArrayList<String>();
-            for(int i=0; i<values.size(); i++)
-            {
-                labels.add(values.get(i).getValueTypeName());
-            }
-            PieChart pChart = new PieChart(getActivity().getApplicationContext());
-            PieData pdata = new PieData(labels, dataset);
-            pChart.setData(pdata);
-            pChart.setDescription(reportList.getDescription());
-
-            pChart.animateY(3000);
-            return pChart;
-        }
+        return new View(getActivity().getApplicationContext());
 
     }
 }

@@ -20,7 +20,9 @@ public class CategoryReportModel {
     @SerializedName("MainId")
     @Expose
     private Integer MainId;
-
+    @SerializedName("Explanation")
+    @Expose
+    private String Explanation;
     /**
      *
      * @return
@@ -111,4 +113,21 @@ public class CategoryReportModel {
         this.MainId = MainId;
     }
 
+    /**
+     *
+     * @return
+     * The Explanation
+     */
+    public String getExplanation() {
+        return Explanation;
+    }
+
+    /**
+     *
+     * @param Explanation
+     * The Explanation
+     */
+    public void setExplanation(String Explanation) {
+        this.Explanation = Explanation;
+    }
 }

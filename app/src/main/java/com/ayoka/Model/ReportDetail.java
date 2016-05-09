@@ -139,12 +139,29 @@ public class ReportDetail {
 
     public class ReportValue {
 
+        @SerializedName("ValueGroup")
+        @Expose
+        private String ValueGroup;
         @SerializedName("ValueName")
         @Expose
         private String ValueName;
         @SerializedName("ValueTypeName")
         @Expose
         private String ValueTypeName;
+
+        /**
+         * @return The ValueGroup
+         */
+        public String getValueGroup() {
+            return ValueGroup;
+        }
+
+        /**
+         * @param ValueGroup The ValueGroup
+         */
+        public void setValueGroup(String ValueGroup) {
+            this.ValueGroup = ValueGroup;
+        }
 
         /**
          * @return The ValueName
@@ -173,6 +190,7 @@ public class ReportDetail {
         public void setValueTypeName(String ValueTypeName) {
             this.ValueTypeName = ValueTypeName;
         }
+
 
     }
 
