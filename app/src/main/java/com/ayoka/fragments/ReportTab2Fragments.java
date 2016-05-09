@@ -23,10 +23,6 @@ import java.util.List;
 public class ReportTab2Fragments extends Fragment {
 
     public ReportDetail.ReportList reportList;
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
