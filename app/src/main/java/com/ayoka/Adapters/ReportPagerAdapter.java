@@ -25,7 +25,7 @@ public class ReportPagerAdapter extends FragmentStatePagerAdapter {
 
 		tab1 = new ReportFragment();
 		tab1.reportList=this.reportDetail.getReportList().get(position);
-		tab1.reportType=1;
+		tab1.reportType=3;
 		return tab1;
 
 	}

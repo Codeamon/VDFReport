@@ -93,7 +93,7 @@ public class ReportActivity extends AppCompatActivity {
                 for (ReportDetail.TabList tab : reportDetail.getTabList()) {
                     tabLayout.addTab(tabLayout.newTab().setText(tab.getTabName()));
                 }
-                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+//                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                 final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
                 adapter = new ReportPagerAdapter
                         (getSupportFragmentManager(), tabLayout.getTabCount(),reportDetail);

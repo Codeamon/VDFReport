@@ -48,7 +48,9 @@ public class ReportDetail {
 
 
     public class ReportList {
-
+        @SerializedName("ChartType")
+        @Expose
+        private Integer ChartType;
         @SerializedName("Description")
         @Expose
         private String Description;
@@ -65,6 +67,24 @@ public class ReportDetail {
         @Expose
         private List<ReportValue> ReportValues = new ArrayList<ReportValue>();
 
+
+        /**
+         *
+         * @return
+         * The ChartType
+         */
+        public Integer getChartType() {
+            return ChartType;
+        }
+
+        /**
+         *
+         * @param ChartType
+         * The ChartType
+         */
+        public void setChartType(Integer ChartType) {
+            this.ChartType = ChartType;
+        }
         /**
          * @return The Description
          */

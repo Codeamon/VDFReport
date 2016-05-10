@@ -36,16 +36,23 @@ public class PieChartModel implements InterfaceCharts {
         {
 
             String value=values.get(i).getValueName().replace(',','.');
-            totalValue+=Float.valueOf(values.get(i).getValueName());
             float floatValue=Float.valueOf(value);
-            entries.add(new Entry(floatValue/totalValue, i));
+            totalValue+=floatValue;
+        }
+        float divider = totalValue / 100;
+        for(int i=0; i<values.size(); i++)
+        {
+
+            String value=values.get(i).getValueName().replace(',','.');
+            float floatValue=Float.valueOf(value);
+            entries.add(new Entry(floatValue/divider, i));
         }
 
         PieDataSet dataset = new PieDataSet(entries, "# Total " + totalValue);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataset.setSliceSpace(2f);
+        dataset.setSliceSpace(3f);
         dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
-
+        dataset.setValueTextSize(11f);
         ArrayList<String> labels = new ArrayList<String>();
         for(int i=0; i<values.size(); i++)
         {

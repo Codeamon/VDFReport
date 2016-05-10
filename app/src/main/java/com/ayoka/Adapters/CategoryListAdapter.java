@@ -47,7 +47,7 @@ public class CategoryListAdapter  extends RecyclerView.Adapter<CategoryListRowHo
     public void onBindViewHolder(CategoryListRowHolder holder, int position) {
         CategoryReportModel category = categoryList.get(position);
         holder.title.setText(category.getCategoryReportname());
-        holder.desc.setText(category.getCategoryReportname());
+        holder.desc.setText(category.getExplanation());
         if(category.getType()==1)
         {
             holder.avatar.setImageResource(R.drawable.list_item);

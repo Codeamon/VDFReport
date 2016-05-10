@@ -49,7 +49,7 @@ public class ReportFragment extends Fragment {
                 5 line chart legent
 */
 
-        switch (reportType) {
+        switch (reportList.getChartType()) {
             case 1:
                 BarChartModel barChartModel = new BarChartModel();
                 return barChartModel.GetChart(getActivity().getApplicationContext(), reportList);

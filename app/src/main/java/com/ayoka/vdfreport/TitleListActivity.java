@@ -123,7 +123,7 @@ public class TitleListActivity extends AppCompatActivity {
 
                         @Override
                         public void onLongClick(View view, int position) {
-                            Toast.makeText(getApplicationContext(), "uzun tıkladın", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), categoryList.get(position).getExplanation(), Toast.LENGTH_SHORT).show();
                         }
                     }));
                 }
@@ -131,7 +131,7 @@ public class TitleListActivity extends AppCompatActivity {
                 @Override
                 public void failure(RetrofitError retrofitError) {
 
-//                    progressDialog.cancel();
+                    progressDialog.cancel();
                     retrofitError.printStackTrace(); //to see if you have errors
                     String merror = retrofitError.getMessage();
                     Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
@@ -175,7 +175,7 @@ public class TitleListActivity extends AppCompatActivity {
 
                         @Override
                         public void onLongClick(View view, int position) {
-                            Toast.makeText(getApplicationContext(), "uzun tıkladın", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), categoryList.get(position).getExplanation(), Toast.LENGTH_SHORT).show();
                         }
                     }));
 
@@ -254,7 +254,11 @@ public class TitleListActivity extends AppCompatActivity {
         final ArrayList<CategoryReportModel> filteredModelList = new ArrayList<>();
         for (CategoryReportModel model : models) {
             final String text = model.getCategoryReportname().toLowerCase();
+            final String exp = model.getExplanation().toLowerCase();
             if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+            else if (exp.contains(query)) {
                 filteredModelList.add(model);
             }
         }

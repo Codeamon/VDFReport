@@ -36,7 +36,7 @@ public class BarChartModel implements InterfaceCharts {
             String value=values.get(i).getValueName().replace(',','.');
             entries.add(new BarEntry(Float.valueOf(value), i));
         }
-        BarDataSet dataset = new BarDataSet(entries, "# "+ "'@ValueType'");
+        BarDataSet dataset = new BarDataSet(entries, "# "+ "");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
         ArrayList<String> labels = new ArrayList<String>();
         for(int i=0; i<values.size(); i++)
