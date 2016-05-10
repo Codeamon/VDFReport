@@ -62,6 +62,12 @@ public class CategoryListAdapter  extends RecyclerView.Adapter<CategoryListRowHo
     public int getItemCount() {
         return (null != categoryList ? categoryList.size() : 0);
     }
+    public void setFilter(ArrayList<CategoryReportModel> countryModels) {
+        categoryList = new ArrayList<>();
+        categoryList.addAll(countryModels);
+        this.notifyDataSetChanged();
+    }
+
 
 }
 class CategoryListRowHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,7 @@
 package com.ayoka.vdfreport;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,9 +9,11 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,22 +62,6 @@ public class TitleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_list);
 
-
-//        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-//        collapsingToolbarLayout.setTitle("Collapsing");
-//        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-//        collapsingToolbarLayout.setContentScrimColor(Color.BLUE);
-//        collapsingToolbarLayout.setStatusBarScrimColor(Color.GREEN);
-//        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-//            @Override
-//            public void onGenerated(Palette palette) {
-//                int primaryDark = getResources().getColor(R.color.primary_dark);
-//                int primary = getResources().getColor(R.color.primary);
-//                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
-//                collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkVibrantColor(primaryDark));
-//            }
-//        });
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             departmentId = extras.getInt("departmentId");
@@ -221,7 +208,57 @@ public class TitleListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String arg0) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                final ArrayList<CategoryReportModel> filteredModelList = filter(categoryList, newText);
+                adapter.setFilter(filteredModelList);
+                return true;
+            }
+        });
+
+
+
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        // Do something when collapsed
+//                        adapter.setFilter(mCountryModel);
+
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        // Do something when expanded
+                        return true; // Return true to expand action view
+                    }
+                });
         return true;
+    }
+
+    private ArrayList<CategoryReportModel> filter(ArrayList<CategoryReportModel> models, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<CategoryReportModel> filteredModelList = new ArrayList<>();
+        for (CategoryReportModel model : models) {
+            final String text = model.getCategoryReportname().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
     @Override
