@@ -95,6 +95,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/pagebg"
     tools:context=".TitleListActivity">
+
+
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar"

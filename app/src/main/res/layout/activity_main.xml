@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<com.ayoka.vdfreport.RippleView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:ripple="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--ripple:rv_type="rectangle">-->
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,7 +28,9 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            app:expandedTitleGravity="center_horizontal"
+            app:collapsedTitleGravity="center_horizontal">
 
 
 
@@ -72,58 +79,14 @@
             </LinearLayout>
             </LinearLayout>
 
-
-
-
-
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_alignParentTop="true"  >-->
-                <!--<RelativeLayout-->
-                    <!--android:id="@+id/top_layout"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
-
-                    <!--<ImageView-->
-                        <!--android:id="@+id/image"-->
-                        <!--android:src="@drawable/avatar"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:scaleType="centerCrop"-->
-                        <!--android:fitsSystemWindows="true"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--app:layout_collapseMode="parallax"/>-->
-
-                <!--</RelativeLayout>-->
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/middle_layout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/top_layout"-->
-                <!--android:paddingTop="50dp">-->
-                <!--<android.support.v7.widget.AppCompatTextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:text="Ahmet YILDIRIM"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--</RelativeLayout>-->
-
-            <!--<include-->
-            <!--android:id="@+id/tool_bar"-->
-            <!--layout="@layout/tool_bar"-->
-            <!--&gt;</include>-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_collapseMode="pin" />
+     </android.support.design.widget.CollapsingToolbarLayout>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -150,5 +113,5 @@
 
     </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
 </android.support.design.widget.CoordinatorLayout>
+<!--</com.ayoka.vdfreport.RippleView>-->

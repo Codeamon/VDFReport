@@ -21,12 +21,10 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!--<action android:name="android.intent.action.MENU" />-->
+                <action android:name="android.intent.action.MENU" />
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity"
@@ -61,11 +59,11 @@
         <activity
             android:name=".EnterActivity">
             <intent-filter>
-                 <action android:name="android.intent.action.DETAIL" />
-                  <category android:name="android.intent.category.DEFAULT" />
-                <!--<action android:name="android.intent.action.MAIN" />-->
+                 <!--<action android:name="android.intent.action.DETAIL" />-->
+                  <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <action android:name="android.intent.action.MAIN" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>

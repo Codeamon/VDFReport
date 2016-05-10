@@ -12,6 +12,14 @@
         android:title="Anasayfa"
         android:icon="@drawable/home"
         app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="0"
+        android:title="Search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="ifRoom"></item>
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout=(AppBarLayout)findViewById(R.id.app_bar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("VDF Rapor");
+        collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.dark_grey));
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         setPalette();
         appBarLayout.setExpanded(false);
