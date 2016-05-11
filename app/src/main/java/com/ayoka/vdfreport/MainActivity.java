@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout.setExpanded(false);
         textview=(AppCompatTextView)findViewById(R.id.txtfullname);
 
-        Bundle extras = getIntent().getExtras();
+        final Bundle extras = getIntent().getExtras();
         if(extras!=null) {
             textview.setText(extras.getString("Username"));
         }
@@ -97,13 +97,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(DepartmanModel[] departmanModels, Response response) {
 
-                for (DepartmanModel departmanModel : departmanModels) {
-                    mainReportsList.add(departmanModel.getDepartmentName());
-                }
-                progressDialog.cancel();
 
+                progressDialog.cancel();
+                Boolean isDealer=false;
+                if(extras!=null && extras.getBoolean("IsDealer")) {
+
+                    isDealer=true;
+                    mainReportsList.add(extras.getString("DealerName"));
+                    textview.setText(extras.getString("Username"));
+                }
+                else
+                {
+                    for (DepartmanModel departmanModel : departmanModels) {
+                        mainReportsList.add(departmanModel.getDepartmentName());
+                    }
+                }
                 MainActivityAdapter adapter = new
-                        MainActivityAdapter(MainActivity.this, mainReportsList, imageId);
+                        MainActivityAdapter(MainActivity.this, mainReportsList, imageId,isDealer);
                 list=(ListView)findViewById(R.id.menu_list);
                 list.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(list);
@@ -121,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                         intent.putExtra("departmentId", position+1);
                         intent.putExtra("mainCategoryId", 0);
+                        intent.putExtra("IsDealer", extras.getBoolean("IsDealer"));
+                        if(extras.getBoolean("IsDealer"))
+                        {
+                            intent.putExtra("DealerId", extras.getInt("DealerId"));
+                        }
                         startActivity(intent);
 
                     }

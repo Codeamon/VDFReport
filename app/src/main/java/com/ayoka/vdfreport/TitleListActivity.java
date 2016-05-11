@@ -55,6 +55,8 @@ public class TitleListActivity extends AppCompatActivity {
 
     private int departmentId = 0;
     private int mainCategoryId=0;
+    private int dealerId=0;
+    private boolean isDealer=false;
     private Toolbar toolbar;
 
     @Override
@@ -66,6 +68,12 @@ public class TitleListActivity extends AppCompatActivity {
         if (extras != null) {
             departmentId = extras.getInt("departmentId");
             mainCategoryId = extras.getInt("mainCategoryId");
+            dealerId = extras.getInt("DealerId");
+            isDealer = extras.getBoolean("IsDealer");
+            if(isDealer)
+            {
+                departmentId=dealerId;
+            }
         }
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object

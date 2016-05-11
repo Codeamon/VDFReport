@@ -30,7 +30,9 @@ public class LoginInfoModel {
     @SerializedName("Email")
     @Expose
     private String Email;
-
+    @SerializedName("DealerName")
+    @Expose
+    private String DealerName;
     /**
      *
      * @return
@@ -173,6 +175,23 @@ public class LoginInfoModel {
      */
     public void setEmail(String Email) {
         this.Email = Email;
+    }
+    /**
+     *
+     * @return
+     * The DealerName
+     */
+    public String getDealerName() {
+        return DealerName;
+    }
+
+    /**
+     *
+     * @param DealerName
+     * The DealerName
+     */
+    public void setDealerName(String DealerName) {
+        this.DealerName = DealerName;
     }
 
 }

@@ -156,10 +156,13 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("Username",loginInfoModel.getName() +" " +  loginInfoModel.getSurname());
                         intent.putExtra("Email", loginInfoModel.getEmail());
+                        intent.putExtra("IsDealer", loginInfoModel.getIsDealer());
+                        if(loginInfoModel.getIsDealer())
+                        {
+                            intent.putExtra("DealerName", loginInfoModel.getDealerName());
+                            intent.putExtra("DealerId", loginInfoModel.getDealerId());
+                        }
                         startActivity(intent);
-
-
-
                     }
                     else
                     {
