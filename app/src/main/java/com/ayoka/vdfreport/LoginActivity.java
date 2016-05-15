@@ -40,6 +40,9 @@ import com.ayoka.Adapters.MainActivityAdapter;
 import com.ayoka.Interfaces.InterfaceController;
 import com.ayoka.Model.DepartmanModel;
 import com.ayoka.Model.LoginInfoModel;
+import com.ayoka.Model.LoginInfoResponse;
+import com.ayoka.Model.LoginUserRequest;
+import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
 
 import java.util.ArrayList;
@@ -147,27 +150,33 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.setMessage("Giriş yapılıyor..");
             progressDialog.setCancelable(false);
             progressDialog.show();
-
-            restInterface.LoginReport(username,password,new Callback<LoginInfoModel>() {
+            LoginUserRequest req = new LoginUserRequest();
+            req.setUsername("ahmety");
+            req.setPassword("455084848");
+            restInterface.LoginUser(req,new Callback<ResponseMessage<LoginInfoResponse>>() {
                 @Override
-                public void success(LoginInfoModel loginInfoModel, Response response) {
+                public void success(ResponseMessage<LoginInfoResponse> responseMessage, Response response) {
                     progressDialog.cancel();
-                    if (loginInfoModel.getToken() != null) {
+                    if (responseMessage.getErrorCode()==0) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("Username",loginInfoModel.getName() +" " +  loginInfoModel.getSurname());
-                        intent.putExtra("Email", loginInfoModel.getEmail());
-                        intent.putExtra("IsDealer", loginInfoModel.getIsDealer());
-                        if(loginInfoModel.getIsDealer())
-                        {
-                            intent.putExtra("DealerName", loginInfoModel.getDealerName());
-                            intent.putExtra("DealerId", loginInfoModel.getDealerId());
-                        }
+                        intent.putExtra("FullName",responseMessage.getMessage().getFullName());
+//                        intent.putExtra("Email", loginInfoModel.getEmail());
+//                        intent.putExtra("IsDealer", loginInfoModel.getIsDealer());
+//                        if(loginInfoModel.getIsDealer())
+//                        {
+//                            intent.putExtra("DealerName", loginInfoModel.getDealerName());
+//                            intent.putExtra("DealerId", loginInfoModel.getDealerId());
+//                        }
+                        intent.putExtra("UserId",responseMessage.getMessage().getUserId());
+
                         startActivity(intent);
                     }
                     else
                     {
                         mPasswordView.setError(getString(R.string.incorrect_password));
                     }
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
                 @Override
                 public void failure(RetrofitError retrofitError) {

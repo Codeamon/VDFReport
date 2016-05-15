@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Bundle extras = getIntent().getExtras();
         if(extras!=null) {
-            textview.setText(extras.getString("Username"));
+            textview.setText(extras.getString("FullName"));
         }
        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
        setSupportActionBar(toolbar);

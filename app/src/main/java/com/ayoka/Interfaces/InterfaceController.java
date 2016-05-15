@@ -3,10 +3,17 @@ package com.ayoka.Interfaces;
 import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.Model.DepartmanModel;
 import com.ayoka.Model.LoginInfoModel;
+import com.ayoka.Model.LoginInfoResponse;
+import com.ayoka.Model.LoginUserRequest;
 import com.ayoka.Model.ReportDetail;
+import com.ayoka.Model.ResponseMessage;
+
+import java.util.HashMap;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -24,6 +31,9 @@ public interface InterfaceController {
     // GET yada POST mu olduğunu belirliyoruz.@Path("projectId")
     @GET("/LoginReport")
     public void LoginReport(@Query("username") String projectId, @Query("password") String password, Callback<LoginInfoModel> callback);
+
+    @POST("/LoginUser")
+    public void LoginUser(@Body LoginUserRequest arguments, Callback<ResponseMessage<LoginInfoResponse>> calback);
 
     @GET("/GetCategoryReportList")
     public void GetCategoryReportList(@Query("departmentId") String departmentId,Callback<CategoryReportModel[]> callback);
