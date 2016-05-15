@@ -107,19 +107,19 @@ public class JsonOperations {
 
         restInterface = restAdapter.create(InterfaceController.class);
 
-        restInterface.GetDepartments("1",new Callback<DepartmanModel[]>() {
-            @Override
-            public void success(DepartmanModel[] departmanModels, Response response) {
-
-                for (DepartmanModel departmanModel : departmanModels) {
-                        mainReportsList.add(departmanModel.getDepartmentName());
-                }
-            }
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-            }
-        });
+//        restInterface.GetDepartments("1",new Callback<DepartmanModel[]>() {
+//            @Override
+//            public void success(DepartmanModel[] departmanModels, Response response) {
+//
+//                for (DepartmanModel departmanModel : departmanModels) {
+//                        mainReportsList.add(departmanModel.getDepartmentName());
+//                }
+//            }
+//            @Override
+//            public void failure(RetrofitError retrofitError) {
+//                retrofitError.printStackTrace(); //to see if you have errors
+//            }
+//        });
         return mainReportsList;
 
     }

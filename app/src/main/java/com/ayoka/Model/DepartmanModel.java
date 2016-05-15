@@ -5,18 +5,16 @@
 
 public class DepartmanModel {
 
-    @SerializedName("Id")
+    @SerializedName("DepartmentId")
     @Expose
-    private Integer Id;
+    private Integer DepartmentId;
     @SerializedName("DepartmentName")
     @Expose
     private String DepartmentName;
-    @SerializedName("IconName")
+
+    @SerializedName("CompanyId")
     @Expose
-    private Object IconName;
-    @SerializedName("ProjectId")
-    @Expose
-    private Integer ProjectId;
+    private Integer CompanyId;
 
     /**
      *
@@ -24,16 +22,16 @@ public class DepartmanModel {
      * The Id
      */
     public Integer getId() {
-        return Id;
+        return DepartmentId;
     }
 
     /**
      *
-     * @param Id
+     * @param DepartmentId
      * The Id
      */
-    public void setId(Integer Id) {
-        this.Id = Id;
+    public void setId(Integer DepartmentId) {
+        this.DepartmentId = DepartmentId;
     }
 
     /**
@@ -54,40 +52,18 @@ public class DepartmanModel {
         this.DepartmentName = DepartmentName;
     }
 
-    /**
-     *
-     * @return
-     * The IconName
-     */
-    public Object getIconName() {
-        return IconName;
+
+    public Integer getCompanyId() {
+        return CompanyId;
     }
 
     /**
      *
-     * @param IconName
-     * The IconName
+     * @param CompanyId
+     * The CompanyId
      */
-    public void setIconName(Object IconName) {
-        this.IconName = IconName;
-    }
-
-    /**
-     *
-     * @return
-     * The ProjectId
-     */
-    public Integer getProjectId() {
-        return ProjectId;
-    }
-
-    /**
-     *
-     * @param ProjectId
-     * The ProjectId
-     */
-    public void setProjectId(Integer ProjectId) {
-        this.ProjectId = ProjectId;
+    public void setCompanyId(Integer CompanyId) {
+        this.CompanyId = CompanyId;
     }
 
 }

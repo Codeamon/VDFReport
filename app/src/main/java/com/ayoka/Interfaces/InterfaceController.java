@@ -24,9 +24,6 @@ import retrofit.http.Query;
  */
 public interface InterfaceController {
 
-    // GET yada POST mu olduğunu belirliyoruz.@Path("projectId")
-    @GET("/GetDepartments")
-    public void GetDepartments(@Query("projectId") String projectId, Callback<DepartmanModel[]> callback);
 
     // GET yada POST mu olduğunu belirliyoruz.@Path("projectId")
     @GET("/LoginReport")
@@ -42,5 +39,9 @@ public interface InterfaceController {
     public void GetSubCategoryReportList(@Query("categoryId") String categoryId,Callback<CategoryReportModel[]> callback);
     @GET("/getreport")
     public void getreport(@Query("reportDetailId") Integer reportId, @Query("filter") String filter, Callback<ReportDetail> callback);
+
+
+    @GET("/GetUserDepartments")
+    public void GetDepartments(@Query("UserId") String userId, Callback<ResponseMessage<DepartmanModel[]>> callback);
 
 }

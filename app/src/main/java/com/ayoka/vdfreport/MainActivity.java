@@ -32,6 +32,7 @@ import com.ayoka.Adapters.MainActivityAdapter;
 import com.ayoka.Helper.ShareScreenshot;
 import com.ayoka.Interfaces.InterfaceController;
 import com.ayoka.Model.DepartmanModel;
+import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
 import com.ayoka.common.JsonOperations;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView image;
     AppCompatTextView textview;
     ListView list;
+    String userId;
     private RestAdapter restAdapter;
     private InterfaceController restInterface;
     private Toolbar toolbar;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         final Bundle extras = getIntent().getExtras();
         if(extras!=null) {
             textview.setText(extras.getString("FullName"));
+            userId=extras.getString("UserId");
         }
        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
        setSupportActionBar(toolbar);
@@ -92,28 +95,18 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Yükleniyor..");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
-        restInterface.GetDepartments("1",new Callback<DepartmanModel[]>() {
+        restInterface.GetDepartments(userId,new Callback<ResponseMessage<DepartmanModel[]>>() {
             @Override
-            public void success(DepartmanModel[] departmanModels, Response response) {
+            public void success(ResponseMessage<DepartmanModel[]> responseMessage, Response response) {
 
 
                 progressDialog.cancel();
-                Boolean isDealer=false;
-                if(extras!=null && extras.getBoolean("IsDealer")) {
 
-                    isDealer=true;
-                    mainReportsList.add(extras.getString("DealerName"));
-                    textview.setText(extras.getString("Username"));
-                }
-                else
-                {
-                    for (DepartmanModel departmanModel : departmanModels) {
-                        mainReportsList.add(departmanModel.getDepartmentName());
-                    }
+                for (DepartmanModel departmanModel : responseMessage.getMessage()) {
+                    mainReportsList.add(departmanModel.getDepartmentName());
                 }
                 MainActivityAdapter adapter = new
-                        MainActivityAdapter(MainActivity.this, mainReportsList, imageId,isDealer);
+                        MainActivityAdapter(MainActivity.this, mainReportsList);
                 list=(ListView)findViewById(R.id.menu_list);
                 list.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(list);

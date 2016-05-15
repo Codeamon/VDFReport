@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 //                            intent.putExtra("DealerName", loginInfoModel.getDealerName());
 //                            intent.putExtra("DealerId", loginInfoModel.getDealerId());
 //                        }
-                        intent.putExtra("UserId",responseMessage.getMessage().getUserId());
+                        intent.putExtra("UserId",responseMessage.getMessage().getUserId().toString());
 
                         startActivity(intent);
                     }
@@ -175,8 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         mPasswordView.setError(getString(R.string.incorrect_password));
                     }
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+
                 }
                 @Override
                 public void failure(RetrofitError retrofitError) {
