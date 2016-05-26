@@ -27,7 +27,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('C:/Users/OsmanKorcan/Desktop/Android_Projeleri/VDFReport/libs/mpandroidchartlibrary-2-2-4.jar')
     compile files('C:/Projects/VDFReport/libs/mpandroidchartlibrary-2-2-4.jar')
-
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
@@ -36,4 +35,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:palette-v7:23.0.0'
+    compile group:'com.squareup.picasso', name:'picasso', version:'2.5.0'
+
 }

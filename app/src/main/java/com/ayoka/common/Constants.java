@@ -28,6 +28,7 @@ public final class Constants {
         }
     };
 
-    public static final String URL = "http://preprodwebapp.vdf.com.tr/InsuranceWebApi/";
+    public static final String URL = "http://preprodwebapp.vdf.com.tr/ReportWebApi/";
+    public static final String imagesURL = "http://preprodwebapp.vdf.com.tr/ReportWebApi/Images/";
 
 }

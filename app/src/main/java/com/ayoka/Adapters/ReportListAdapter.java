@@ -34,7 +34,7 @@ public class ReportListAdapter extends ArrayAdapter<String> {
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(web[position]);
-
+//        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imageView);
         imageView.setImageResource(imageId[position]);
         return rowView;
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VDF Rapor</string>
+    <!--<string name="app_name">VDF Rapor</string>-->
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
@@ -50,5 +50,9 @@
     <string name="app_label">app_label</string>
     <string name="search_hint">search_hint</string>
 
+    <string name="app_name">DTReport</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>
