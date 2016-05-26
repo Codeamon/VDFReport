@@ -124,11 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                         intent.putExtra("departmentId", position+1);
                         intent.putExtra("mainCategoryId", 0);
-                        intent.putExtra("IsDealer", extras.getBoolean("IsDealer"));
-                        if(extras.getBoolean("IsDealer"))
-                        {
-                            intent.putExtra("DealerId", extras.getInt("DealerId"));
-                        }
+                        intent.putExtras(extras);
                         startActivity(intent);
 
                     }

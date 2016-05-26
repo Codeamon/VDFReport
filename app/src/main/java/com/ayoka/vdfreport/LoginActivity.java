@@ -161,6 +161,8 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainNewActivity.class);
                         intent.putExtra("FullName",responseMessage.getMessage().getFullName());
                         intent.putExtra("Mail",responseMessage.getMessage().getMail());
+                        intent.putExtra("UserId",responseMessage.getMessage().getUserId().toString());
+
 //                        intent.putExtra("Email", loginInfoModel.getEmail());
 //                        intent.putExtra("IsDealer", loginInfoModel.getIsDealer());
 //                        if(loginInfoModel.getIsDealer())
@@ -168,7 +170,6 @@ public class LoginActivity extends AppCompatActivity {
 //                            intent.putExtra("DealerName", loginInfoModel.getDealerName());
 //                            intent.putExtra("DealerId", loginInfoModel.getDealerId());
 //                        }
-                        intent.putExtra("UserId",responseMessage.getMessage().getUserId().toString());
 
                         startActivity(intent);
                     }

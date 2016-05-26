@@ -32,11 +32,11 @@ public interface InterfaceController {
     @POST("/LoginUser")
     public void LoginUser(@Body LoginUserRequest arguments, Callback<ResponseMessage<LoginInfoResponse>> calback);
 
-    @GET("/GetCategoryReportList")
-    public void GetCategoryReportList(@Query("departmentId") String departmentId,Callback<CategoryReportModel[]> callback);
+    @GET("/GetCategoryReports")
+    public void GetCategoryReports(@Query("departmentId") String departmentId,Callback<ResponseMessage<CategoryReportModel[]>> callback);
 
-    @GET("/GetSubCategoryReportList")
-    public void GetSubCategoryReportList(@Query("categoryId") String categoryId,Callback<CategoryReportModel[]> callback);
+    @GET("/GetSubCategoryReports")
+    public void GetSubCategoryReports(@Query("mainCategoryId") String categoryId,Callback<ResponseMessage<CategoryReportModel[]>> callback);
     @GET("/getreport")
     public void getreport(@Query("reportDetailId") Integer reportId, @Query("filter") String filter, Callback<ReportDetail> callback);
 

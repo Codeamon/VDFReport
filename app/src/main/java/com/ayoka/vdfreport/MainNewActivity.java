@@ -1,6 +1,8 @@
 package com.ayoka.vdfreport;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.ayoka.Adapters.MainActivityAdapter;
 import com.ayoka.Interfaces.InterfaceController;
+import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.Model.DepartmanModel;
 import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
@@ -79,9 +82,11 @@ public class MainNewActivity  extends AppCompatActivity
 //        txtFullName= (TextView) findViewById(R.id.txtfullname);
 //        txtMail= (TextView) findViewById(R.id.txtMail);
         final Bundle extras = getIntent().getExtras();
+        String userId="0";
         if(extras!=null) {
             txtFullName.setText(extras.getString("FullName"));
             txtMail.setText(extras.getString("Mail"));
+            userId=extras.getString("UserId");
         }
 
         final ArrayList<String> mainReportsList = new ArrayList<String>();
@@ -94,18 +99,15 @@ public class MainNewActivity  extends AppCompatActivity
         progressDialog.setMessage("Yükleniyor..");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        restInterface.GetDepartments("1",new Callback<ResponseMessage<DepartmanModel[]>>() {
+        restInterface.GetDepartments(userId,new Callback<ResponseMessage<DepartmanModel[]>>() {
             @Override
             public void success(ResponseMessage<DepartmanModel[]> responseMessage, Response response) {
 
 
                 progressDialog.cancel();
-
-                for (DepartmanModel departmanModel : responseMessage.getMessage()) {
-                        mainReportsList.add(departmanModel.getDepartmentName());
-                    }
+                final DepartmanModel[] depList = responseMessage.getMessage();
                     MainActivityAdapter adapter = new
-                            MainActivityAdapter(MainNewActivity.this, responseMessage.getMessage());
+                            MainActivityAdapter(MainNewActivity.this, depList);
                     list=(ListView)findViewById(R.id.menu_list);
                     list.setAdapter(adapter);
 //                setListViewHeightBasedOnChildren(list);
@@ -119,15 +121,16 @@ public class MainNewActivity  extends AppCompatActivity
                             {
                                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             }
-
+                            DepartmanModel model = depList[position];
                             Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
-                            intent.putExtra("departmentId", position+1);
+                            intent.putExtra("departmentId", model.getId());
                             intent.putExtra("mainCategoryId", 0);
 //                            intent.putExtra("IsDealer", extras.getBoolean("IsDealer"));
 //                            if(extras.getBoolean("IsDealer"))
 //                            {
 //                                intent.putExtra("DealerId", extras.getInt("DealerId"));
 //                            }
+                            intent.putExtras(extras);
                             startActivity(intent);
 
                         }
@@ -155,7 +158,25 @@ public class MainNewActivity  extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Programdan Çıkılsın Mı?").setCancelable(false).setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int id) { //Eğer evet butonuna basılırsa
+                    dialog.dismiss();
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }).setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Programdan çıkmaktan vazgeçtiniz.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            alertDialogBuilder.create().show();
+//            super.onBackPressed();
         }
     }
 
@@ -188,9 +209,9 @@ public class MainNewActivity  extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_exit) {
-
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         } else if (id == R.id.nav_report) {
-
+            startActivity(new Intent(getApplicationContext(), MainNewActivity.class));
         } else if (id == R.id.nav_add) {
 
         } else if (id == R.id.nav_setting) {
