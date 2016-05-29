@@ -11,6 +11,7 @@ import com.ayoka.Charts.BarChartModel;
 import com.ayoka.Charts.MultiLineChartModel;
 import com.ayoka.Charts.PieChartModel;
 import com.ayoka.Model.ReportDetail;
+import com.ayoka.Model.ReportList;
 import com.ayoka.Model.Reports;
 import com.ayoka.common.JsonOperations;
 import com.ayoka.test.TestClass_ReportTab1;
@@ -35,13 +36,12 @@ import java.util.Objects;
  * Created by ahmetyildirim on 8.5.2016.
  */
 public class ReportFragment extends Fragment {
-    public ReportDetail.ReportList reportList;
+    public  ReportList reportList;
     public int reportType=1;
     public Objects report;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        List<ReportDetail.ReportValue> values=reportList.getReportValues();
 /*
         1 barchart
                 2 horizontal barchart

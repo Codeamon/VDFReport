@@ -5,19 +5,18 @@
 
 public class DepartmanModel {
 
-    @SerializedName("DepartmentId")
+    @SerializedName("Id")
     @Expose
-    private Integer DepartmentId;
+    private Integer Id;
     @SerializedName("DepartmentName")
     @Expose
     private String DepartmentName;
-
-    @SerializedName("LogoName")
+    @SerializedName("IconName")
     @Expose
-    private String LogoName;
-    @SerializedName("CompanyId")
+    private Object IconName;
+    @SerializedName("ProjectId")
     @Expose
-    private Integer CompanyId;
+    private Integer ProjectId;
 
     /**
      *
@@ -25,16 +24,16 @@ public class DepartmanModel {
      * The Id
      */
     public Integer getId() {
-        return DepartmentId;
+        return Id;
     }
 
     /**
      *
-     * @param DepartmentId
+     * @param Id
      * The Id
      */
-    public void setId(Integer DepartmentId) {
-        this.DepartmentId = DepartmentId;
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     /**
@@ -55,37 +54,40 @@ public class DepartmanModel {
         this.DepartmentName = DepartmentName;
     }
 
+    /**
+     *
+     * @return
+     * The IconName
+     */
+    public Object getIconName() {
+        return IconName;
+    }
+
+    /**
+     *
+     * @param IconName
+     * The IconName
+     */
+    public void setIconName(Object IconName) {
+        this.IconName = IconName;
+    }
 
     /**
      *
      * @return
-     * The Logo
+     * The ProjectId
      */
-    public String getLogoName() {
-        return LogoName;
+    public Integer getProjectId() {
+        return ProjectId;
     }
 
     /**
      *
-     * @param LogoName
-     * The DepartmentName
+     * @param ProjectId
+     * The ProjectId
      */
-    public void setLogo(String LogoName) {
-        this.LogoName = LogoName;
-    }
-
-
-    public Integer getCompanyId() {
-        return CompanyId;
-    }
-
-    /**
-     *
-     * @param CompanyId
-     * The CompanyId
-     */
-    public void setCompanyId(Integer CompanyId) {
-        this.CompanyId = CompanyId;
+    public void setProjectId(Integer ProjectId) {
+        this.ProjectId = ProjectId;
     }
 
 }

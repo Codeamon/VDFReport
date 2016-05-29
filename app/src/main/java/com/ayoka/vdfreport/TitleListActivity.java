@@ -30,7 +30,6 @@ import com.ayoka.Listener.RecyclerTouchListener;
 import com.ayoka.Model.Category;
 import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.Model.DepartmanModel;
-import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
 import com.ayoka.common.JsonOperations;
 
@@ -65,16 +64,16 @@ public class TitleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_list);
 
-        final Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
             departmentId = extras.getInt("departmentId");
             mainCategoryId = extras.getInt("mainCategoryId");
-//            dealerId = extras.getInt("DealerId");
-//            isDealer = extras.getBoolean("IsDealer");
-//            if(isDealer)
-//            {
-//                departmentId=dealerId;
-//            }
+            dealerId = extras.getInt("DealerId");
+            isDealer = extras.getBoolean("IsDealer");
+            if(isDealer)
+            {
+                departmentId=dealerId;
+            }
         }
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -98,12 +97,11 @@ public class TitleListActivity extends AppCompatActivity {
         progressDialog.show();
         final Context context = this;
        if (mainCategoryId == 0){
-            restInterface.GetCategoryReports(Integer.toString(departmentId), new Callback<ResponseMessage<CategoryReportModel[]>>() {
+            restInterface.GetCategoryReportList(Integer.toString(departmentId), new Callback<CategoryReportModel[]>() {
                 @Override
-                public void success(ResponseMessage<CategoryReportModel[]> categoryReportresponse, Response response) {
+                public void success(CategoryReportModel[] categoryReportModels, Response response) {
 
-                    CategoryReportModel[] responseList =categoryReportresponse.getMessage();
-                    for (CategoryReportModel categoryReportModel : responseList) {
+                    for (CategoryReportModel categoryReportModel : categoryReportModels) {
                         categoryList.add(categoryReportModel);
                     }
                    progressDialog.cancel();
@@ -118,15 +116,15 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            if(model.getType()){
+                            if(model.getType()==1){
                                 Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                                intent.putExtra("reportId", model.getCategoryReportId());
+                                intent.putExtra("reportId", model.getId());
                                 startActivity(intent);
                             }
                             else {
                                 Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                                 intent.putExtra("departmentId", departmentId);
-                                intent.putExtra("mainCategoryId", model.getCategoryReportId());
+                                intent.putExtra("mainCategoryId", model.getId());
                                 startActivity(intent);
                             }
                         }
@@ -150,16 +148,13 @@ public class TitleListActivity extends AppCompatActivity {
         }
         else
         {
-            restInterface.GetSubCategoryReports(Integer.toString(mainCategoryId), new Callback<ResponseMessage<CategoryReportModel[]>>() {
+            restInterface.GetSubCategoryReportList(Integer.toString(mainCategoryId), new Callback<CategoryReportModel[]>() {
                 @Override
-                public void success(ResponseMessage<CategoryReportModel[]> categoryReportresponse, Response response) {
+                public void success(CategoryReportModel[] categoryReportModels, Response response) {
 
-                    CategoryReportModel[] responseList =categoryReportresponse.getMessage();
-                    for (CategoryReportModel categoryReportModel : responseList) {
+                    for (CategoryReportModel categoryReportModel : categoryReportModels) {
                         categoryList.add(categoryReportModel);
                     }
-
-
                     progressDialog.cancel();
                     adapter = new CategoryListAdapter(context, categoryList);
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -172,18 +167,16 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            if(model.getType()){
+                            if(model.getType()==1){
 
                                 Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                                intent.putExtra("reportId", model.getCategoryReportId());
-                                intent.putExtras(extras);
+                                intent.putExtra("reportId", model.getId());
                                 startActivity(intent);
                             }
                             else {
                                 Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                                 intent.putExtra("departmentId", departmentId);
-                                intent.putExtra("mainCategoryId", model.getCategoryReportId());
-                                intent.putExtras(extras);
+                                intent.putExtra("mainCategoryId", model.getId());
                                 startActivity(intent);
                             }
                         }
@@ -212,7 +205,6 @@ public class TitleListActivity extends AppCompatActivity {
 
     private void SetLayout()
     {
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
@@ -269,7 +261,7 @@ public class TitleListActivity extends AppCompatActivity {
 
         final ArrayList<CategoryReportModel> filteredModelList = new ArrayList<>();
         for (CategoryReportModel model : models) {
-            final String text = model.getCategoryReportName().toLowerCase();
+            final String text = model.getCategoryReportname().toLowerCase();
             final String exp = model.getExplanation().toLowerCase();
             if (text.contains(query)) {
                 filteredModelList.add(model);
@@ -295,11 +287,7 @@ public class TitleListActivity extends AppCompatActivity {
         }
         if(id==R.id.action_home)
         {
-            Intent intent = new Intent(getApplicationContext(), MainNewActivity.class);
-
-            final Bundle extras = getIntent().getExtras();
-            intent.putExtras(extras);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         if(id==android.R.id.home)
         {

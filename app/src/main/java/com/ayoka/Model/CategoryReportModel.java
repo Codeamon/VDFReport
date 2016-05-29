@@ -5,21 +5,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class CategoryReportModel {
 
-    @SerializedName("CategoryReportId")
+    @SerializedName("Id")
     @Expose
-    private Integer CategoryReportId;
+    private Integer Id;
     @SerializedName("DepartmentId")
     @Expose
     private Integer DepartmentId;
-    @SerializedName("CategoryReportName")
+    @SerializedName("CategoryReportname")
     @Expose
-    private String CategoryReportName;
+    private String CategoryReportname;
     @SerializedName("Type")
     @Expose
-    private Boolean Type;
-    @SerializedName("MainCategoryId")
+    private Integer Type;
+    @SerializedName("MainId")
     @Expose
-    private Integer MainCategoryId;
+    private Integer MainId;
     @SerializedName("Explanation")
     @Expose
     private String Explanation;
@@ -28,17 +28,17 @@ public class CategoryReportModel {
      * @return
      * The Id
      */
-    public Integer getCategoryReportId() {
-        return CategoryReportId;
+    public Integer getId() {
+        return Id;
     }
 
     /**
      *
-     * @param CategoryReportId
-     * The CategoryReportId
+     * @param Id
+     * The Id
      */
-    public void setCategoryReportId(Integer CategoryReportId) {
-        this.CategoryReportId = CategoryReportId;
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     /**
@@ -64,17 +64,17 @@ public class CategoryReportModel {
      * @return
      * The CategoryReportname
      */
-    public String getCategoryReportName() {
-        return CategoryReportName;
+    public String getCategoryReportname() {
+        return CategoryReportname;
     }
 
     /**
      *
-     * @param CategoryReportName
-     * The CategoryReportName
+     * @param CategoryReportname
+     * The CategoryReportname
      */
-    public void setCategoryReportName(String CategoryReportName) {
-        this.CategoryReportName = CategoryReportName;
+    public void setCategoryReportname(String CategoryReportname) {
+        this.CategoryReportname = CategoryReportname;
     }
 
     /**
@@ -82,7 +82,7 @@ public class CategoryReportModel {
      * @return
      * The Type
      */
-    public Boolean getType() {
+    public Integer getType() {
         return Type;
     }
 
@@ -91,26 +91,26 @@ public class CategoryReportModel {
      * @param Type
      * The Type
      */
-    public void setType(Boolean Type) {
+    public void setType(Integer Type) {
         this.Type = Type;
     }
 
     /**
      *
      * @return
-     * The MainCategoryId
+     * The MainId
      */
-    public Integer getMainCategoryId() {
-        return MainCategoryId;
+    public Integer getMainId() {
+        return MainId;
     }
 
     /**
      *
-     * @param MainCategoryId
+     * @param MainId
      * The MainId
      */
-    public void setMainCategoryId(Integer MainCategoryId) {
-        this.MainCategoryId = MainCategoryId;
+    public void setMainId(Integer MainId) {
+        this.MainId = MainId;
     }
 
     /**

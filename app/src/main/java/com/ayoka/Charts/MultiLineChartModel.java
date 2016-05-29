@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.ayoka.Interfaces.InterfaceCharts;
 import com.ayoka.Model.ReportDetail;
+import com.ayoka.Model.ReportList;
+import com.ayoka.Model.ReportValue;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -34,7 +36,7 @@ public class MultiLineChartModel implements InterfaceCharts {
             ColorTemplate.VORDIPLOM_COLORS[2]
     };
 
-    public final View GetChart(Context context, ReportDetail.ReportList reportList) {
+    public final View GetChart(Context context, ReportList reportList) {
 
         mChart = new LineChart(context);
         mChart.setDrawGridBackground(false);
@@ -67,31 +69,32 @@ public class MultiLineChartModel implements InterfaceCharts {
 
         ArrayList<String> xVal = new ArrayList<String>();
         ArrayList<String> oVal = new ArrayList<String>();
-        for (ReportDetail.ReportValue rv : reportList.getReportValues()
+        for (ReportValue rv : reportList.getReportValues()
              ) {
-            if(!xVal.contains(rv.getValueTypeName())){
-                xVal.add(rv.getValueTypeName());
+            if(!xVal.contains(rv.getReportColumns().get(1).getColumnValue())){
+                xVal.add(rv.getReportColumns().get(1).getColumnValue());
             }
         }
 
         //for (int i =0; i < xVal.size();i++) {
-        for (ReportDetail.ReportValue rv : reportList.getReportValues()
+        for (ReportValue rv : reportList.getReportValues()
                 ) {
-            if (!xVal.contains(rv.getValueTypeName())) {
-                xVal.add(rv.getValueTypeName());
+            if(!oVal.contains(rv.getReportColumns().get(1).getColumnValue())){
+                oVal.add(rv.getReportColumns().get(1).getColumnValue());
             }
-            if (!oVal.contains(rv.getValueGroup())) {
-                oVal.add(rv.getValueGroup());
+            if(!xVal.contains(rv.getReportColumns().get(0).getColumnValue())){
+                xVal.add(rv.getReportColumns().get(0).getColumnValue());
             }
+
         }
         for ( String GroupName : oVal
              ) {
             ArrayList<Entry> values = new ArrayList<Entry>();
-            for (ReportDetail.ReportValue rv : reportList.getReportValues()
+            for (ReportValue rv : reportList.getReportValues()
                     ) {
 
-            if(GroupName.equals(rv.getValueGroup()))
-                values.add(new Entry((float)Integer.parseInt(rv.getValueName()),Integer.parseInt(rv.getValueTypeName())));
+            if(GroupName.equals(rv.getReportColumns().get(1).getColumnValue()))
+                values.add(new Entry((float)Integer.parseInt(rv.getReportColumns().get(0).getColumnValue()),Integer.parseInt(rv.getReportColumns().get(1).getColumnValue())));
 
             }
 

@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/logo" />
+                        android:src="@drawable/splashvdf" />
                 </RelativeLayout>
 
 
@@ -66,8 +66,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Kullanıcı Adı"
                             android:inputType="textPersonName"
-                            android:imeOptions="actionNext"
-                            android:text="ahmety"/>
+                            android:imeOptions="actionNext"/>
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
 
@@ -87,8 +86,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Şifre"
                             android:inputType="textPassword"
-                            android:imeOptions="actionSend"
-                            android:text="123"/>
+                            android:imeOptions="actionSend"/>
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
 

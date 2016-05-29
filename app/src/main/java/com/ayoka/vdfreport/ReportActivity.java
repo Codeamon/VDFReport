@@ -6,38 +6,35 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ayoka.Adapters.CategoryListAdapter;
+import com.ayoka.Adapters.ChartDataAdapter;
 import com.ayoka.Adapters.ReportPagerAdapter;
-import com.ayoka.Helper.ShareScreenshot;
+import com.ayoka.Charts.BarChartModel;
 import com.ayoka.Interfaces.InterfaceController;
-import com.ayoka.Listener.RecyclerTouchListener;
-import com.ayoka.Model.CategoryReportModel;
-import com.ayoka.Model.ReportDetail;
+import com.ayoka.Model.FilterList;
+import com.ayoka.Model.ReportList;
+import com.ayoka.Model.ReportRequest;
+import com.ayoka.Model.ReportResponse;
+import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
+import com.ayoka.Charts.listviewitems.BarChartItem;
+import com.ayoka.Charts.listviewitems.ChartItem;
+import com.ayoka.Charts.listviewitems.LineChartItem;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.YAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -61,9 +58,11 @@ public class ReportActivity extends AppCompatActivity {
 
     private int reportDetailId = 0;
     ReportPagerAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_report);
 
         Bundle extras = getIntent().getExtras();
@@ -86,23 +85,50 @@ public class ReportActivity extends AppCompatActivity {
         progressDialog.show();
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        restInterface.getreport(reportDetailId,"2015", new Callback<ReportDetail>() {
+        //Dummy Set codes/////////////////
+        ReportRequest rRequest = new ReportRequest();
+        List<FilterList> fList=  new ArrayList<FilterList>();
+        FilterList f = new FilterList();
+        f.setFilterName("StartDate");
+        f.setFilterValue("1.1.2015");
+        fList.add(f);
+        FilterList f1 = new FilterList();
+        f1.setFilterName("EndDate");
+        f1.setFilterValue("3.3.2015");
+        fList.add(f1);
+        rRequest.setFilterList(fList);
+        rRequest.setReportMainId(2);
+        /////////////////////////////////
+        restInterface.getreport(rRequest, new Callback<ResponseMessage<ReportResponse>>() {
             @Override
-            public void success(ReportDetail reportDetail, Response response) {
+            public void success(ResponseMessage<ReportResponse> reportResponse, Response response) {
                 progressDialog.cancel();
-                for (ReportDetail.TabList tab : reportDetail.getTabList()) {
-                    tabLayout.addTab(tabLayout.newTab().setText(tab.getTabName()));
+
+                tabLayout.addTab(tabLayout.newTab().setText("Aylık Rapor"));
+                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+                if(reportResponse.getMessage().getReportList().size() > 1) {
+                   // adapter = new ReportPagerAdapter
+                    //                       (getSupportFragmentManager(), 2, reportResponse.getMessage().getReportList());
+                    //viewPager.setAdapter(adapter);
+                    final ListView lv = (ListView) findViewById(R.id.listView1) ;
+                    ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), GetChartList(reportResponse.getMessage().getReportList()));
+                    lv.setAdapter(cda);
+
                 }
-//                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-                final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-                adapter = new ReportPagerAdapter
-                        (getSupportFragmentManager(), tabLayout.getTabCount(),reportDetail);
-                viewPager.setAdapter(adapter);
-                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                else {
+                    final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+                    viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                    adapter = new ReportPagerAdapter
+                            (getSupportFragmentManager(), tabLayout.getTabCount(), reportResponse.getMessage().getReportList());
+                    viewPager.setAdapter(adapter);
+
+                }
+
                 tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
-                        viewPager.setCurrentItem(tab.getPosition());
+                        //viewPager.setCurrentItem(tab.getPosition());
                     }
 
                     @Override
@@ -115,6 +141,7 @@ public class ReportActivity extends AppCompatActivity {
 
                     }
                 });
+
             }
 
             @Override
@@ -152,6 +179,28 @@ public class ReportActivity extends AppCompatActivity {
 
         }
         return false;
+    }
+
+    private List<ChartItem> GetChartList(List<ReportList> reportDetail)
+    {
+        ArrayList<ChartItem> list = new ArrayList<ChartItem>();
+        for (int i = 0; i < reportDetail.size(); i++) {
+
+            switch (reportDetail.get(i).getChartType()) {
+                case 1:
+                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext()));
+                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext()));
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
+        }
+        return list;
     }
 
 }

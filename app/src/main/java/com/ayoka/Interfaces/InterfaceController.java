@@ -9,6 +9,8 @@ import com.ayoka.Model.ReportDetail;
 import com.ayoka.Model.ResponseMessage;
 
 import java.util.HashMap;
+import com.ayoka.Model.ReportRequest;
+import com.ayoka.Model.ReportResponse;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -24,6 +26,9 @@ import retrofit.http.Query;
  */
 public interface InterfaceController {
 
+    // GET yada POST mu olduğunu belirliyoruz.@Path("projectId")
+    @GET("/GetDepartments")
+    public void GetDepartments(@Query("projectId") String projectId, Callback<DepartmanModel[]> callback);
 
     // GET yada POST mu olduğunu belirliyoruz.@Path("projectId")
     @GET("/LoginReport")
@@ -32,16 +37,14 @@ public interface InterfaceController {
     @POST("/LoginUser")
     public void LoginUser(@Body LoginUserRequest arguments, Callback<ResponseMessage<LoginInfoResponse>> calback);
 
-    @GET("/GetCategoryReports")
-    public void GetCategoryReports(@Query("departmentId") String departmentId,Callback<ResponseMessage<CategoryReportModel[]>> callback);
+    @GET("/GetCategoryReportList")
+    public void GetCategoryReportList(@Query("departmentId") String departmentId,Callback<CategoryReportModel[]> callback);
 
-    @GET("/GetSubCategoryReports")
-    public void GetSubCategoryReports(@Query("mainCategoryId") String categoryId,Callback<ResponseMessage<CategoryReportModel[]>> callback);
-    @GET("/getreport")
-    public void getreport(@Query("reportDetailId") Integer reportId, @Query("filter") String filter, Callback<ReportDetail> callback);
+    @GET("/GetSubCategoryReportList")
+    public void GetSubCategoryReportList(@Query("categoryId") String categoryId,Callback<CategoryReportModel[]> callback);
 
 
-    @GET("/GetUserDepartments")
-    public void GetDepartments(@Query("UserId") String userId, Callback<ResponseMessage<DepartmanModel[]>> callback);
+    @POST("/getreport")
+    public void getreport(@Body ReportRequest reportRequest, Callback<ResponseMessage<ReportResponse>> callback);
 
 }

@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/splashvdf"
-                android:src="@drawable/logo"
+                android:src="@drawable/splashvdf"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </RelativeLayout>

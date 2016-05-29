@@ -18,7 +18,7 @@ import retrofit.http.Query;
  */
 public interface InterfaceCharts {
 
-    public View GetChart(Context context, ReportDetail.ReportList reportList);
+    //public View GetChart(Context context, ReportDetail.ReportList reportList);
 
 
 }

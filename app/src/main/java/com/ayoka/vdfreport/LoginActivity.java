@@ -151,18 +151,15 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.setCancelable(false);
             progressDialog.show();
             LoginUserRequest req = new LoginUserRequest();
-            req.setUsername(username);
-            req.setPassword(password);
+            req.setUsername("ahmety");
+            req.setPassword("455084848");
             restInterface.LoginUser(req,new Callback<ResponseMessage<LoginInfoResponse>>() {
                 @Override
                 public void success(ResponseMessage<LoginInfoResponse> responseMessage, Response response) {
                     progressDialog.cancel();
                     if (responseMessage.getErrorCode()==0) {
-                        Intent intent = new Intent(getApplicationContext(), MainNewActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("FullName",responseMessage.getMessage().getFullName());
-                        intent.putExtra("Mail",responseMessage.getMessage().getMail());
-                        intent.putExtra("UserId",responseMessage.getMessage().getUserId().toString());
-
 //                        intent.putExtra("Email", loginInfoModel.getEmail());
 //                        intent.putExtra("IsDealer", loginInfoModel.getIsDealer());
 //                        if(loginInfoModel.getIsDealer())
@@ -170,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 //                            intent.putExtra("DealerName", loginInfoModel.getDealerName());
 //                            intent.putExtra("DealerId", loginInfoModel.getDealerId());
 //                        }
+                        intent.putExtra("UserId",responseMessage.getMessage().getUserId());
 
                         startActivity(intent);
                     }
@@ -177,7 +175,8 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         mPasswordView.setError(getString(R.string.incorrect_password));
                     }
-
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
                 @Override
                 public void failure(RetrofitError retrofitError) {
