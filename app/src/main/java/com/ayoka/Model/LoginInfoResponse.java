@@ -20,6 +20,9 @@ public class LoginInfoResponse {
     @SerializedName("UserGroupId")
     @Expose
     private Integer UserGroupId;
+    @SerializedName("Mail")
+    @Expose
+    private String Mail;
 
 
     /**
@@ -90,6 +93,19 @@ public class LoginInfoResponse {
      */
     public void setUserGroupId(Integer UserGroupId) {
         this.UserGroupId = UserGroupId;
+    }
+    /**
+     * @return The Mail
+     */
+    public String getMail() {
+        return Mail;
+    }
+
+    /**
+     * @param Mail The Mail
+     */
+    public void setMail(String Mail) {
+        this.Mail = Mail;
     }
 
 }

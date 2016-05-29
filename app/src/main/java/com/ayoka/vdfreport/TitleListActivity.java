@@ -30,6 +30,7 @@ import com.ayoka.Listener.RecyclerTouchListener;
 import com.ayoka.Model.Category;
 import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.Model.DepartmanModel;
+import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
 import com.ayoka.common.JsonOperations;
 
@@ -64,16 +65,16 @@ public class TitleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_list);
 
-        Bundle extras = getIntent().getExtras();
+        final Bundle extras = getIntent().getExtras();
         if (extras != null) {
             departmentId = extras.getInt("departmentId");
             mainCategoryId = extras.getInt("mainCategoryId");
-            dealerId = extras.getInt("DealerId");
-            isDealer = extras.getBoolean("IsDealer");
-            if(isDealer)
-            {
-                departmentId=dealerId;
-            }
+//            dealerId = extras.getInt("DealerId");
+//            isDealer = extras.getBoolean("IsDealer");
+//            if(isDealer)
+//            {
+//                departmentId=dealerId;
+//            }
         }
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -82,8 +83,8 @@ public class TitleListActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.URL)
@@ -96,15 +97,16 @@ public class TitleListActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         final Context context = this;
-       if (mainCategoryId == 0){
-            restInterface.GetCategoryReportList(Integer.toString(departmentId), new Callback<CategoryReportModel[]>() {
+        if (mainCategoryId == 0){
+            restInterface.GetCategoryReports(Integer.toString(departmentId), new Callback<ResponseMessage<CategoryReportModel[]>>() {
                 @Override
-                public void success(CategoryReportModel[] categoryReportModels, Response response) {
+                public void success(ResponseMessage<CategoryReportModel[]> categoryReportresponse, Response response) {
 
-                    for (CategoryReportModel categoryReportModel : categoryReportModels) {
+                    CategoryReportModel[] responseList =categoryReportresponse.getMessage();
+                    for (CategoryReportModel categoryReportModel : responseList) {
                         categoryList.add(categoryReportModel);
                     }
-                   progressDialog.cancel();
+                    progressDialog.cancel();
                     adapter = new CategoryListAdapter(context, categoryList);
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -116,15 +118,15 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            if(model.getType()==1){
+                            if(model.getType()){
                                 Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                                intent.putExtra("reportId", model.getId());
+                                intent.putExtra("reportId", model.getCategoryReportId());
                                 startActivity(intent);
                             }
                             else {
                                 Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                                 intent.putExtra("departmentId", departmentId);
-                                intent.putExtra("mainCategoryId", model.getId());
+                                intent.putExtra("mainCategoryId", model.getCategoryReportId());
                                 startActivity(intent);
                             }
                         }
@@ -148,13 +150,16 @@ public class TitleListActivity extends AppCompatActivity {
         }
         else
         {
-            restInterface.GetSubCategoryReportList(Integer.toString(mainCategoryId), new Callback<CategoryReportModel[]>() {
+            restInterface.GetSubCategoryReports(Integer.toString(mainCategoryId), new Callback<ResponseMessage<CategoryReportModel[]>>() {
                 @Override
-                public void success(CategoryReportModel[] categoryReportModels, Response response) {
+                public void success(ResponseMessage<CategoryReportModel[]> categoryReportresponse, Response response) {
 
-                    for (CategoryReportModel categoryReportModel : categoryReportModels) {
+                    CategoryReportModel[] responseList =categoryReportresponse.getMessage();
+                    for (CategoryReportModel categoryReportModel : responseList) {
                         categoryList.add(categoryReportModel);
                     }
+
+
                     progressDialog.cancel();
                     adapter = new CategoryListAdapter(context, categoryList);
                     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -167,16 +172,18 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            if(model.getType()==1){
+                            if(model.getType()){
 
                                 Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                                intent.putExtra("reportId", model.getId());
+                                intent.putExtra("reportId", model.getCategoryReportId());
+                                intent.putExtras(extras);
                                 startActivity(intent);
                             }
                             else {
                                 Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                                 intent.putExtra("departmentId", departmentId);
-                                intent.putExtra("mainCategoryId", model.getId());
+                                intent.putExtra("mainCategoryId", model.getCategoryReportId());
+                                intent.putExtras(extras);
                                 startActivity(intent);
                             }
                         }
@@ -205,6 +212,7 @@ public class TitleListActivity extends AppCompatActivity {
 
     private void SetLayout()
     {
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
@@ -261,7 +269,7 @@ public class TitleListActivity extends AppCompatActivity {
 
         final ArrayList<CategoryReportModel> filteredModelList = new ArrayList<>();
         for (CategoryReportModel model : models) {
-            final String text = model.getCategoryReportname().toLowerCase();
+            final String text = model.getCategoryReportName().toLowerCase();
             final String exp = model.getExplanation().toLowerCase();
             if (text.contains(query)) {
                 filteredModelList.add(model);
@@ -287,7 +295,11 @@ public class TitleListActivity extends AppCompatActivity {
         }
         if(id==R.id.action_home)
         {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            Intent intent = new Intent(getApplicationContext(), MainNewActivity.class);
+
+            final Bundle extras = getIntent().getExtras();
+            intent.putExtras(extras);
+            startActivity(intent);
         }
         if(id==android.R.id.home)
         {

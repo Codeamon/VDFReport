@@ -1,22 +1,23 @@
-      package com.ayoka.Model;
+package com.ayoka.Model;
 
-        import com.google.gson.annotations.Expose;
-        import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class DepartmanModel {
 
-    @SerializedName("Id")
+    @SerializedName("DepartmentId")
     @Expose
-    private Integer Id;
+    private Integer DepartmentId;
     @SerializedName("DepartmentName")
     @Expose
     private String DepartmentName;
-    @SerializedName("IconName")
+
+    @SerializedName("LogoName")
     @Expose
-    private Object IconName;
-    @SerializedName("ProjectId")
+    private String LogoName;
+    @SerializedName("CompanyId")
     @Expose
-    private Integer ProjectId;
+    private Integer CompanyId;
 
     /**
      *
@@ -24,16 +25,16 @@ public class DepartmanModel {
      * The Id
      */
     public Integer getId() {
-        return Id;
+        return DepartmentId;
     }
 
     /**
      *
-     * @param Id
+     * @param DepartmentId
      * The Id
      */
-    public void setId(Integer Id) {
-        this.Id = Id;
+    public void setId(Integer DepartmentId) {
+        this.DepartmentId = DepartmentId;
     }
 
     /**
@@ -54,40 +55,37 @@ public class DepartmanModel {
         this.DepartmentName = DepartmentName;
     }
 
-    /**
-     *
-     * @return
-     * The IconName
-     */
-    public Object getIconName() {
-        return IconName;
-    }
-
-    /**
-     *
-     * @param IconName
-     * The IconName
-     */
-    public void setIconName(Object IconName) {
-        this.IconName = IconName;
-    }
 
     /**
      *
      * @return
-     * The ProjectId
+     * The Logo
      */
-    public Integer getProjectId() {
-        return ProjectId;
+    public String getLogoName() {
+        return LogoName;
     }
 
     /**
      *
-     * @param ProjectId
-     * The ProjectId
+     * @param LogoName
+     * The DepartmentName
      */
-    public void setProjectId(Integer ProjectId) {
-        this.ProjectId = ProjectId;
+    public void setLogo(String LogoName) {
+        this.LogoName = LogoName;
+    }
+
+
+    public Integer getCompanyId() {
+        return CompanyId;
+    }
+
+    /**
+     *
+     * @param CompanyId
+     * The CompanyId
+     */
+    public void setCompanyId(Integer CompanyId) {
+        this.CompanyId = CompanyId;
     }
 
 }
