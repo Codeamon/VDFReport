@@ -63,43 +63,41 @@ public class MultiLineChartModel implements InterfaceCharts {
         Legend l = mChart.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
 
+        mChart.setData(getBarData(reportList));
+        mChart.invalidate();
+
+        return mChart;
+    }
 
 
+    public LineData getBarData(ReportList reportList) {
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
 
         ArrayList<String> xVal = new ArrayList<String>();
         ArrayList<String> oVal = new ArrayList<String>();
-        for (ReportValue rv : reportList.getReportValues()
-             ) {
-            if(!xVal.contains(rv.getReportColumns().get(1).getColumnValue())){
-                xVal.add(rv.getReportColumns().get(1).getColumnValue());
-            }
-        }
 
-        //for (int i =0; i < xVal.size();i++) {
         for (ReportValue rv : reportList.getReportValues()
                 ) {
-            if(!oVal.contains(rv.getReportColumns().get(1).getColumnValue())){
-                oVal.add(rv.getReportColumns().get(1).getColumnValue());
+            if(!oVal.contains(rv.getReportColumns().get(2).getColumnValue())){
+                oVal.add(rv.getReportColumns().get(2).getColumnValue());
             }
-            if(!xVal.contains(rv.getReportColumns().get(0).getColumnValue())){
-                xVal.add(rv.getReportColumns().get(0).getColumnValue());
+            if(!xVal.contains(rv.getReportColumns().get(1).getColumnValue())){
+                xVal.add(rv.getReportColumns().get(1).getColumnValue());
             }
 
         }
         for ( String GroupName : oVal
-             ) {
+                ) {
             ArrayList<Entry> values = new ArrayList<Entry>();
             for (ReportValue rv : reportList.getReportValues()
                     ) {
 
-            if(GroupName.equals(rv.getReportColumns().get(1).getColumnValue()))
-                values.add(new Entry((float)Integer.parseInt(rv.getReportColumns().get(0).getColumnValue()),Integer.parseInt(rv.getReportColumns().get(1).getColumnValue())));
+                if(GroupName.equals(rv.getReportColumns().get(2).getColumnValue()))
+                    values.add(new Entry((float)Integer.parseInt(rv.getReportColumns().get(0).getColumnValue()),Integer.parseInt(rv.getReportColumns().get(1).getColumnValue())));
 
             }
 
             LineDataSet d = new LineDataSet(values, GroupName);
-
 
             int color =   mColors[(oVal.indexOf(GroupName)) % mColors.length];
             d.setColor(color);
@@ -108,17 +106,8 @@ public class MultiLineChartModel implements InterfaceCharts {
             dataSets.add(d);
 
         }
-
-
-        // make the first DataSet dashed
-        //((LineDataSet) dataSets.get(0)).enableDashedLine(10, 10, 0);
-        //((LineDataSet) dataSets.get(0)).setColors(ColorTemplate.PASTEL_COLORS);
-        //((LineDataSet) dataSets.get(0)).setCircleColors(ColorTemplate.VORDIPLOM_COLORS);
-
         LineData data = new LineData(xVal, dataSets);
-        mChart.setData(data);
-        mChart.invalidate();
-
-        return mChart;
+        return data;
     }
+
 }

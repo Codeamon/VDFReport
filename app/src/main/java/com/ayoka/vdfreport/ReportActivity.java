@@ -88,6 +88,8 @@ public class ReportActivity extends AppCompatActivity {
         //Dummy Set codes/////////////////
         ReportRequest rRequest = new ReportRequest();
         List<FilterList> fList=  new ArrayList<FilterList>();
+
+        if(reportDetailId==2){
         FilterList f = new FilterList();
         f.setFilterName("StartDate");
         f.setFilterValue("1.1.2015");
@@ -95,9 +97,9 @@ public class ReportActivity extends AppCompatActivity {
         FilterList f1 = new FilterList();
         f1.setFilterName("EndDate");
         f1.setFilterValue("3.3.2015");
-        fList.add(f1);
-        rRequest.setFilterList(fList);
-        rRequest.setReportMainId(2);
+        fList.add(f1);}
+        //rRequest.setFilterList(fList);
+        rRequest.setReportMainId(reportDetailId);
         /////////////////////////////////
         restInterface.getreport(rRequest, new Callback<ResponseMessage<ReportResponse>>() {
             @Override
