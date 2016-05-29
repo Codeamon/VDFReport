@@ -3,7 +3,6 @@ package com.ayoka.Charts.listviewitems;
 import android.content.Context;
 import android.view.View;
 
-import com.ayoka.Model.ReportList;
 import com.github.mikephil.charting.data.ChartData;
 
 /**

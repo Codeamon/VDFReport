@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ayoka.Charts.BarChartModel;
-import com.ayoka.Model.ReportList;
 import com.ayoka.vdfreport.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
