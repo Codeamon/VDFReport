@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ayoka.Charts.BarChartModel;
 import com.ayoka.vdfreport.R;
@@ -18,9 +19,11 @@ public class LineChartItem extends ChartItem {
 
     private Typeface mTf;
 
-    public LineChartItem(ChartData<?> cd, Context c) {
-        super(cd);
+    private String Description;
 
+    public LineChartItem(ChartData<?> cd, Context c,String Description) {
+        super(cd);
+        this.Description = Description;
         //mTf = Typeface.createFromAsset(c.getAssets(), "OpenSans-Regular.ttf");
     }
     @Override
@@ -40,7 +43,8 @@ public class LineChartItem extends ChartItem {
             convertView = LayoutInflater.from(c).inflate(
                     R.layout.list_item_linechart, null);
             holder.chart = (LineChart) convertView.findViewById(R.id.chart);
-
+            TextView tw = (TextView) convertView.findViewById(R.id.textView);
+            tw.setText(this.Description);
             convertView.setTag(holder);
 
         } else {

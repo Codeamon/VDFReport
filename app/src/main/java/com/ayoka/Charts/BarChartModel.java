@@ -59,6 +59,7 @@ public class BarChartModel implements InterfaceCharts {
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
         BarData data = new BarData(labels, dataset);
+
         return data;
     }
 }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ayoka.Charts.BarChartModel;
+import com.ayoka.Charts.HorizontalBarChartModel;
+import com.ayoka.Charts.LineChartModel;
 import com.ayoka.Charts.MultiLineChartModel;
 import com.ayoka.Charts.PieChartModel;
 import com.ayoka.Model.ReportDetail;
@@ -55,14 +57,17 @@ public class ReportFragment extends Fragment {
                 BarChartModel barChartModel = new BarChartModel();
                 return barChartModel.GetChart(getActivity().getApplicationContext(), reportList);
             case 2:
-
-                break;
+                LineChartModel lineChartModel = new LineChartModel();
+                return lineChartModel.GetChart(getActivity().getApplicationContext(), reportList);
             case 3:
                 PieChartModel pieChartModel = new PieChartModel();
                 return pieChartModel.GetChart(getActivity().getApplicationContext(), reportList);
             case 4:
                 MultiLineChartModel multiLineChartModel = new MultiLineChartModel();
                 return multiLineChartModel.GetChart(getActivity().getApplicationContext(), reportList);
+            case 5:
+                HorizontalBarChartModel horizontalBarChartModel = new HorizontalBarChartModel();
+                return horizontalBarChartModel.GetChart(getActivity().getApplicationContext(), reportList);
             default:
 
                 break;

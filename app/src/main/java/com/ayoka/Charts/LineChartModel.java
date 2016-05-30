@@ -1,11 +1,9 @@
 package com.ayoka.Charts;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 
 import com.ayoka.Interfaces.InterfaceCharts;
-import com.ayoka.Model.ReportDetail;
 import com.ayoka.Model.ReportList;
 import com.ayoka.Model.ReportValue;
 import com.github.mikephil.charting.charts.LineChart;
@@ -17,15 +15,14 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by OsmanKorcan on 9.5.2016.
  */
-public class MultiLineChartModel implements InterfaceCharts {
+public class LineChartModel implements InterfaceCharts {
 
     private LineChart mChart;
-    public MultiLineChartModel()
+    public LineChartModel()
     {
 
     }
@@ -65,7 +62,6 @@ public class MultiLineChartModel implements InterfaceCharts {
 
         mChart.setData(getBarData(reportList));
         mChart.invalidate();
-        
 
         return mChart;
     }

@@ -21,6 +21,9 @@ import android.widget.Toast;
 import com.ayoka.Adapters.ChartDataAdapter;
 import com.ayoka.Adapters.ReportPagerAdapter;
 import com.ayoka.Charts.BarChartModel;
+import com.ayoka.Charts.HorizontalBarChartModel;
+import com.ayoka.Charts.MultiLineChartModel;
+import com.ayoka.Charts.listviewitems.HorizontalBarChartItem;
 import com.ayoka.Interfaces.InterfaceController;
 import com.ayoka.Model.FilterList;
 import com.ayoka.Model.ReportList;
@@ -32,6 +35,7 @@ import com.ayoka.Charts.listviewitems.BarChartItem;
 import com.ayoka.Charts.listviewitems.ChartItem;
 import com.ayoka.Charts.listviewitems.LineChartItem;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,15 +110,20 @@ public class ReportActivity extends AppCompatActivity {
             public void success(ResponseMessage<ReportResponse> reportResponse, Response response) {
                 progressDialog.cancel();
 
-                tabLayout.addTab(tabLayout.newTab().setText("Aylık Rapor"));
+                tabLayout.addTab(tabLayout.newTab().setText(""));
                 tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
                 if(reportResponse.getMessage().getReportList().size() > 1) {
-                   // adapter = new ReportPagerAdapter
-                    //                       (getSupportFragmentManager(), 2, reportResponse.getMessage().getReportList());
-                    //viewPager.setAdapter(adapter);
+
+                    //Normalde report_acvity de var. Çoklu olunca listview itemlerin kendi içinde
+                    //başlıkları olduğu için yer kaplamaması adına invisible yapılıyor
+                    final TextView tv = (TextView) findViewById(R.id.textView) ;
+                    tv.setVisibility(View.INVISIBLE);
+                    tv.setHeight(0);
                     final ListView lv = (ListView) findViewById(R.id.listView1) ;
+
                     ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), GetChartList(reportResponse.getMessage().getReportList()));
+
                     lv.setAdapter(cda);
 
                 }
@@ -123,6 +132,8 @@ public class ReportActivity extends AppCompatActivity {
                     viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                     adapter = new ReportPagerAdapter
                             (getSupportFragmentManager(), tabLayout.getTabCount(), reportResponse.getMessage().getReportList());
+                    final TextView tv = (TextView) findViewById(R.id.textView) ;
+                    tv.setText(reportResponse.getMessage().getReportList().get(0).getDescription());
                     viewPager.setAdapter(adapter);
 
                 }
@@ -190,13 +201,18 @@ public class ReportActivity extends AppCompatActivity {
 
             switch (reportDetail.get(i).getChartType()) {
                 case 1:
-                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext()));
-                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext()));
+                    //list.add(new HorizontalBarChartItem(new HorizontalBarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
+                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
                 case 2:
                     break;
                 case 3:
+                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
                     break;
                 case 4:
+                    list.add(new LineChartItem(new MultiLineChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
+                    break;
+                case 5:
+                    list.add(new HorizontalBarChartItem(new HorizontalBarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
                     break;
                 default:
                     break;
