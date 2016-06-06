@@ -30,6 +30,7 @@ import com.ayoka.Listener.RecyclerTouchListener;
 import com.ayoka.Model.Category;
 import com.ayoka.Model.CategoryReportModel;
 import com.ayoka.Model.DepartmanModel;
+import com.ayoka.Model.ReportInfoResponse;
 import com.ayoka.Model.ResponseMessage;
 import com.ayoka.common.Constants;
 import com.ayoka.common.JsonOperations;
@@ -119,9 +120,24 @@ public class TitleListActivity extends AppCompatActivity {
 
                             CategoryReportModel model = categoryList.get(position);
                             if(model.getType()){
-                                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                                intent.putExtra("reportId", model.getCategoryReportId());
-                                startActivity(intent);
+                                restInterface.GetReportInfo(Integer.toString(model.getCategoryReportId()), new Callback<ResponseMessage<ReportInfoResponse[]>>() {
+
+                                    @Override
+                                    public void success(ResponseMessage<ReportInfoResponse[]> reportInfoResponse, Response response) {
+
+                                        Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                                        intent.putExtra("reportInfoResponse", reportInfoResponse.getMessage());
+                                        startActivity(intent);
+                                    }
+                                    @Override
+                                    public void failure(RetrofitError retrofitError) {
+
+                                        progressDialog.cancel();
+                                        retrofitError.printStackTrace(); //to see if you have errors
+                                        String merror = retrofitError.getMessage();
+                                        Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
+                                    }
+                                        });
                             }
                             else {
                                 Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);

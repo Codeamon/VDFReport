@@ -3,8 +3,10 @@ package com.ayoka.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class FilterList {
+
+public class FilterList implements Serializable {
 
     @SerializedName("FilterName")
     @Expose

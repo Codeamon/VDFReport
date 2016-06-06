@@ -6,6 +6,7 @@ import com.ayoka.Model.LoginInfoModel;
 import com.ayoka.Model.LoginInfoResponse;
 import com.ayoka.Model.LoginUserRequest;
 import com.ayoka.Model.ReportDetail;
+import com.ayoka.Model.ReportInfoResponse;
 import com.ayoka.Model.ReportRequest;
 import com.ayoka.Model.ReportResponse;
 import com.ayoka.Model.ResponseMessage;
@@ -45,5 +46,9 @@ public interface InterfaceController {
 
     @GET("/GetUserDepartments")
     public void GetDepartments(@Query("UserId") String userId, Callback<ResponseMessage<DepartmanModel[]>> callback);
+
+
+    @GET("/GetReportInfo")
+    public void GetReportInfo(@Query("categoryReportId") String categoryReportId, Callback<ResponseMessage<ReportInfoResponse[]>> callback);
 
 }

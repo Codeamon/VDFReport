@@ -11,7 +11,8 @@
     <color name="colorPrimaryDark">#45aaeb</color>
     <color name="colorAccent">#45aaeb</color>
     <color name="rippelColor">#FFFFFF</color>
-    <color name="accent">#FFEB3B</color>
+    <color name="accent">#45aaeb</color>
+    <color name="accent_pressed">#C2185B</color>
 
 
 </resources>
