@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import com.ayoka.Charts.BarChartModel;
 import com.ayoka.Charts.HorizontalBarChartModel;
 import com.ayoka.Charts.LineChartModel;
+import com.ayoka.Charts.MultiBarChartModel;
 import com.ayoka.Charts.MultiLineChartModel;
 import com.ayoka.Charts.PieChartModel;
+import com.ayoka.Charts.StackedBarChartModel;
 import com.ayoka.Model.ReportDetail;
 import com.ayoka.Model.ReportList;
 import com.ayoka.Model.Reports;
@@ -26,6 +28,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.StackedValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -68,6 +71,12 @@ public class ReportFragment extends Fragment {
             case 5:
                 HorizontalBarChartModel horizontalBarChartModel = new HorizontalBarChartModel();
                 return horizontalBarChartModel.GetChart(getActivity().getApplicationContext(), reportList);
+            case 6:
+                MultiBarChartModel multiBarChartModel = new MultiBarChartModel();
+                return multiBarChartModel.GetChart(getActivity().getApplicationContext(), reportList);
+            case 7:
+                StackedBarChartModel stackedBarChartModel = new StackedBarChartModel();
+                return stackedBarChartModel.GetChart(getActivity().getApplicationContext(), reportList);
             default:
 
                 break;

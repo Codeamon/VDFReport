@@ -115,7 +115,21 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
         //}
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+        if( response == null)
+        {
 
+            new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle)
+                    .setTitle("Üzgünüz!")
+                    .setMessage("Bu menü adımına tanımlanmış bir rapor içeriği bulunamadı...")
+                    .setCancelable(false)
+                    .setPositiveButton("Geri", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Whatever...
+                        }
+                    }).create().show();
+            return;
+        }
 
         ReportInfoResponse firstResponse = response[0];
         restAdapter = new RestAdapter.Builder()

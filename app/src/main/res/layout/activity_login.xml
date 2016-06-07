@@ -67,7 +67,7 @@
                             android:hint="Kullanıcı Adı"
                             android:inputType="textPersonName"
                             android:imeOptions="actionNext"
-                            android:text="ahmety"/>
+                            android:text="korcana"/>
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
 

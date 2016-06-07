@@ -31,9 +31,11 @@ public class MultiLineChartModel implements InterfaceCharts {
     }
 
     private int[] mColors = new int[] {
-            ColorTemplate.VORDIPLOM_COLORS[0],
-            ColorTemplate.VORDIPLOM_COLORS[1],
-            ColorTemplate.VORDIPLOM_COLORS[2]
+            Color.BLACK,
+            Color.RED,
+            Color.BLUE,
+            Color.CYAN,
+            Color.GREEN
     };
 
     public final View GetChart(Context context, ReportList reportList) {
@@ -94,7 +96,7 @@ public class MultiLineChartModel implements InterfaceCharts {
                     ) {
 
                 if(GroupName.equals(rv.getReportColumns().get(2).getColumnValue()))
-                    values.add(new Entry((float)Integer.parseInt(rv.getReportColumns().get(0).getColumnValue()),Integer.parseInt(rv.getReportColumns().get(1).getColumnValue())));
+                    values.add(new Entry((float)Integer.parseInt(rv.getReportColumns().get(0).getColumnValue()),values.size()));//Integer.parseInt(rv.getReportColumns().get(1).getColumnValue())));
 
             }
 
@@ -103,6 +105,7 @@ public class MultiLineChartModel implements InterfaceCharts {
             int color =   mColors[(oVal.indexOf(GroupName)) % mColors.length];
             d.setColor(color);
             d.setCircleColor(color);
+            d.setCircleRadius(8f);
             d.setLineWidth(6f);
             dataSets.add(d);
 
