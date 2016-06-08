@@ -77,7 +77,7 @@ public class PieChartModel implements InterfaceCharts {
         PieDataSet dataset = new PieDataSet(entries, "# Total " + totalValue);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
         dataset.setSliceSpace(3f);
-        dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        //dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
         dataset.setValueTextSize(11f);
 
         PieData pdata = new PieData(labels, dataset);

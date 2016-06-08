@@ -36,7 +36,9 @@ import com.ayoka.Adapters.ReportPagerAdapter;
 import com.ayoka.Charts.BarChartModel;
 import com.ayoka.Charts.HorizontalBarChartModel;
 import com.ayoka.Charts.MultiLineChartModel;
+import com.ayoka.Charts.PieChartModel;
 import com.ayoka.Charts.listviewitems.HorizontalBarChartItem;
+import com.ayoka.Charts.listviewitems.PieChartItem;
 import com.ayoka.Interfaces.InterfaceController;
 import com.ayoka.Model.DepartmanModel;
 import com.ayoka.Model.FilterList;
@@ -329,7 +331,7 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
                 case 2:
                     break;
                 case 3:
-                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
+                    list.add(new PieChartItem(new PieChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
                     break;
                 case 4:
                     list.add(new LineChartItem(new MultiLineChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
