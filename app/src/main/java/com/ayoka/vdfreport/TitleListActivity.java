@@ -188,18 +188,32 @@ public class TitleListActivity extends AppCompatActivity {
                         public void onClick(View view, int position) {
 
                             CategoryReportModel model = categoryList.get(position);
-                            if(model.getType()){
+                            if(model.getType()) {
+                                restInterface.GetReportInfo(Integer.toString(model.getCategoryReportId()), new Callback<ResponseMessage<ReportInfoResponse[]>>() {
 
-                                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                                intent.putExtra("reportId", model.getCategoryReportId());
-                                intent.putExtras(extras);
-                                startActivity(intent);
+                                    @Override
+                                    public void success(ResponseMessage<ReportInfoResponse[]> reportInfoResponse, Response response) {
+
+                                        Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                                        intent.putExtra("reportInfoResponse", reportInfoResponse.getMessage());
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError retrofitError) {
+
+                                        progressDialog.cancel();
+                                        retrofitError.printStackTrace(); //to see if you have errors
+                                        String merror = retrofitError.getMessage();
+                                        Toast.makeText(getApplicationContext(), merror, Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
                             else {
                                 Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                                 intent.putExtra("departmentId", departmentId);
                                 intent.putExtra("mainCategoryId", model.getCategoryReportId());
-                                intent.putExtras(extras);
+
                                 startActivity(intent);
                             }
                         }

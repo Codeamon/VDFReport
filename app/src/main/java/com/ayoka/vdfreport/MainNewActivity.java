@@ -10,10 +10,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
@@ -50,6 +52,8 @@ public class MainNewActivity  extends AppCompatActivity
     private RecyclerView recyclerView;
     private TextView txtFullName;
     private TextView txtMail;
+    private  MainActivityAdapter adapter;
+    public ArrayList<DepartmanModel> departmentList = new ArrayList<DepartmanModel>();
     ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +111,14 @@ public class MainNewActivity  extends AppCompatActivity
 
 
                 progressDialog.cancel();
-                final DepartmanModel[] depList = responseMessage.getMessage();
-                    MainActivityAdapter adapter = new
-                            MainActivityAdapter(MainNewActivity.this, depList);
+                DepartmanModel[] responseList =responseMessage.getMessage();
+                for (DepartmanModel departmanModel : responseList) {
+                    departmentList.add(departmanModel);
+                }
+
+
+                    adapter = new
+                            MainActivityAdapter(MainNewActivity.this, departmentList);
                     list=(ListView)findViewById(R.id.menu_list);
                     list.setAdapter(adapter);
 //                setListViewHeightBasedOnChildren(list);
@@ -123,7 +132,7 @@ public class MainNewActivity  extends AppCompatActivity
                             {
                                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             }
-                            DepartmanModel model = depList[position];
+                            DepartmanModel model = departmentList.get(position);
                             Intent intent = new Intent(getApplicationContext(), TitleListActivity.class);
                             intent.putExtra("departmentId", model.getId());
                             intent.putExtra("mainCategoryId", 0);
@@ -145,13 +154,6 @@ public class MainNewActivity  extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),merror,Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
-
-
-
     }
 
     @Override
@@ -185,10 +187,56 @@ public class MainNewActivity  extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu); final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String arg0) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                final ArrayList<DepartmanModel> filteredModelList = filter(departmentList, newText);
+                adapter.setFilter(filteredModelList);
+                return true;
+
+            }
+        });
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        // Do something when collapsed
+//                        adapter.setFilter(mCountryModel);
+
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        // Do something when expanded
+                        return true; // Return true to expand action view
+                    }
+                });
         return true;
     }
 
+    private ArrayList<DepartmanModel> filter(ArrayList<DepartmanModel> models, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<DepartmanModel> filteredModelList = new ArrayList<>();
+        for (DepartmanModel model : models) {
+            final String text = model.getDepartmentName().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -213,7 +261,7 @@ public class MainNewActivity  extends AppCompatActivity
         if (id == R.id.nav_exit) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         } else if (id == R.id.nav_report) {
-            startActivity(new Intent(getApplicationContext(), MainNewActivity.class));
+            //
         } else if (id == R.id.nav_add) {
 //            showInputDialog();
 

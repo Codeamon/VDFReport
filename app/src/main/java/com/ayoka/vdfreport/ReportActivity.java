@@ -91,6 +91,7 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
     public ResponseMessage<ReportResponse> finalResponse;
     public List<com.ayoka.Model.ReportList>  finalResponseMessageList;
     private int reportDetailId = 0;
+    private int preContentId = 0;
     ReportPagerAdapter adapter;
     ChartDataAdapter cda;
     public ReportRequest rRequest = new ReportRequest();
@@ -115,6 +116,9 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
           //  reportDetailId = extras.getInt("reportId");
             response =(ReportInfoResponse[])getIntent().getSerializableExtra("reportInfoResponse");
         //}
+        if (extras != null) {
+            preContentId = extras.getInt("PreContentId");
+        }
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         if( response == null)
@@ -133,7 +137,17 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
             return;
         }
 
-        ReportInfoResponse firstResponse = response[0];
+        ReportInfoResponse firstResponse= response[0];;
+        if(preContentId!=0)
+        {
+            for(ReportInfoResponse item : response)
+            {
+                if(item.getReportMainId()==preContentId)
+                {
+                    firstResponse=item;
+                }
+            }
+        }
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.URL)
                 .build();
@@ -243,6 +257,17 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
                     final TextView tv = (TextView) findViewById(R.id.textView) ;
                     tv.setText(reportResponse.getMessage().getReportList().get(0).getDescription());
                     viewPager.setAdapter(adapter);
+                    com.melnykov.fab.FloatingActionButton fab = (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab);
+
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showAlert();
+//                            FragmentManager manager = getFragmentManager();
+//                            FilterAlertDialogFragment alertDialogFragment = new FilterAlertDialogFragment();
+//                            alertDialogFragment.show(manager, "fragment_filter");
+                        }
+                    });
                 }
 
                 tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -327,7 +352,7 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
             switch (reportDetail.get(i).getChartType()) {
                 case 1:
                     //list.add(new HorizontalBarChartItem(new HorizontalBarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
-                    list.add(new BarChartItem(new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription()));
+                    list.add(new BarChartItem(this,new BarChartModel().getBarData(reportDetail.get(i)), getApplicationContext(),reportDetail.get(i).getDescription(),reportDetail.get(i).getReportContentId()));
                 case 2:
                     break;
                 case 3:
@@ -372,12 +397,23 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
     private void showAlert() {
 
         ReportInfoResponse[] response =(ReportInfoResponse[])getIntent().getSerializableExtra("reportInfoResponse");
+        ReportInfoResponse firstResponse= response[0];;
+        if(preContentId!=0)
+        {
+            for(ReportInfoResponse item : response)
+            {
+                if(item.getReportMainId()==preContentId)
+                {
+                    firstResponse=item;
+                }
+            }
+        }
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final LinearLayout layout       = new LinearLayout(this);
         TextView tvMessage        = new TextView(this);
         final EditText etInput    = new EditText(this);
 
-        final ReportInfoResponse reportInfo = response[0];
+        final ReportInfoResponse reportInfo = firstResponse;
         List<ReportFilter> filterList = reportInfo.getReportFilters();
         for (int i=0; i<filterList.size(); i++) {
 
@@ -390,7 +426,15 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
                     final NumberPicker picker = new NumberPicker(this);
                     final EditText etInt  = new EditText(this);
                     final TextInputLayout etLayoutInt  = new TextInputLayout(this);
-                    etInt.setText(filter.getDefaultValue());
+                    if(rRequest.getFilterList()!=null && rRequest.getFilterList().size()>0 && rRequest.getFilterList().get(i)!=null)
+                    {
+                        etInt.setText(rRequest.getFilterList().get(i).getFilterValue());
+                    }
+                    else
+                    {
+                        etInt.setText(filter.getDefaultValue());
+                    }
+
                     etInt.setInputType(InputType.TYPE_CLASS_NUMBER);
                     etLayoutInt.addView(etInt);
                     etLayoutInt.setHint(filter.getFilterColumn());
@@ -494,6 +538,7 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
                 Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
                 intent.putExtra("reportInfoResponse", (ReportInfoResponse[])getIntent().getSerializableExtra("reportInfoResponse"));
                 intent.putExtra("reportFilterRequest", rRequest);
+                intent.putExtra("PreContentId", preContentId);
 
                 finish();
                 startActivity(intent);
@@ -502,7 +547,7 @@ public class ReportActivity extends AppCompatActivity implements FilterDialogFra
 
              //   cda = new ChartDataAdapter(getApplicationContext(), GetChartList(finalResponseMessageList));
              //   cda.notifyDataSetChanged();
-                Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
             }
         });
 

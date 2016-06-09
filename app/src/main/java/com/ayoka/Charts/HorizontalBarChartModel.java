@@ -110,7 +110,7 @@ public class HorizontalBarChartModel implements InterfaceCharts {
             List<ReportColumn> ReportColumn = values.get(i).getReportColumns();
             //Reportcolumn listesinin ilk nesnesi value.
             //ikinci nesnesi ise label
-            yVals1.add(new BarEntry(Float.parseFloat(ReportColumn.get(0).getColumnValue()), i));
+            yVals1.add(new BarEntry(Float.parseFloat(ReportColumn.get(0).getColumnValue().replace(',','.')), i));
             xVals.add(ReportColumn.get(1).getColumnValue());
         }
 
@@ -120,6 +120,7 @@ public class HorizontalBarChartModel implements InterfaceCharts {
 
         set1 = new BarDataSet(yVals1, "");
 
+        set1.setColors(ColorTemplate.COLORFUL_COLORS);
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(set1);
 

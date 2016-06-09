@@ -52,13 +52,14 @@ public class BarChartModel implements InterfaceCharts {
             List<ReportColumn> ReportColumn = values.get(i).getReportColumns();
             //Reportcolumn listesinin ilk nesnesi value.
             //ikinci nesnesi ise label
-            entries.add(new BarEntry(Float.parseFloat(ReportColumn.get(0).getColumnValue()), i));
+            entries.add(new BarEntry(Float.parseFloat(ReportColumn.get(0).getColumnValue().replace(',','.')), i));
             labels.add(ReportColumn.get(1).getColumnValue());
         }
         BarDataSet dataset = new BarDataSet(entries, "# "+ "");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
         BarData data = new BarData(labels, dataset);
+        data.setValueTextSize(10f);
 
         return data;
     }

@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     mainReportsList.add(departmanModel.getDepartmentName());
                 }
                 MainActivityAdapter adapter = new
-                        MainActivityAdapter(MainActivity.this, responseMessage.getMessage());
+                        MainActivityAdapter(MainActivity.this, null);
                 list=(ListView)findViewById(R.id.menu_list);
                 list.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(list);
